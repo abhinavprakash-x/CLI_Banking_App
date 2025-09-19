@@ -3,8 +3,7 @@ using namespace std;
 
 int main(){
     //load data from csv
-
-
+    
 
     //CLI Based Login System
     int repeat = 1, user_choice;
@@ -25,7 +24,6 @@ int main(){
 
 
 
-    //options
     //update values
     //save csv
 }
