@@ -1,0 +1,56 @@
+#include"customer.h"
+
+customer::customer(){
+    account_number = "";
+    customer_name = "";
+    customer_password = "";
+    balance = 0.0;
+    loan_amount = 0.0;
+    wrong_password_attempts = 0;
+    account_status = 0;
+}
+
+customer::customer(std::string acc_no, std::string name, std::string passwd, double bal, double loan_bal, int attempts, int status){
+    account_number = acc_no;
+    customer_name = name;
+    customer_password = passwd;
+    balance = bal;
+    loan_amount = loan_bal;
+    wrong_password_attempts = attempts;
+    account_status = status;
+}
+
+void customer::withdraw(double amount){
+    if(balance > amount){
+        balance -= amount;
+        if(balance < 500){
+            std::cout<<"Balance Below Minimum Amount ₹100 deucted. \n";
+            balance -= 100;
+        }
+    } else std::cout<<"Insufficient Funds";
+    //update csv
+}
+
+void customer::deposit(double amount){
+    balance += amount;
+    //update csv
+}
+
+void customer::transfer(std::string receiver_account_number, double amount){
+    //to do
+}
+
+void customer::change_password(){
+    std::cout<<"Choose a New Password: \n";
+    std::cout<<"NOTE: CHOOSE A STRONG PASSWORD!!!";
+    std::cin>>customer_password;
+    //update csv
+}
+
+void customer::loadCSV(){
+    //to do
+}
+
+void customer::saveCSV(){
+    //to do
+}

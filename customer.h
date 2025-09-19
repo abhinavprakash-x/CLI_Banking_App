@@ -14,6 +14,8 @@ class customer{
         int wrong_password_attempts;
         int account_status;
     public:
+        customer();
+        customer(std::string acc_no, std::string name, std::string passwd, double bal, double loan_bal, int attempts, int status);
         void loadCSV();
         void saveCSV();
         void withdraw(double amount);
