@@ -22,6 +22,7 @@ class customer{
         void deposit(double amount);
         void transfer(std::string receiver_account_number, double amount);
         void change_password();
+        void view_balance();
 };
 
 #endif

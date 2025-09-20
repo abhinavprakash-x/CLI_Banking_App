@@ -27,7 +27,7 @@ void customer::withdraw(double amount){
             std::cout<<"Balance Below Minimum Amount ₹100 deucted. \n";
             balance -= 100;
         }
-    } else std::cout<<"Insufficient Funds";
+    } else std::cout<<"Insufficient Funds\n";
     //update csv
 }
 
@@ -42,9 +42,13 @@ void customer::transfer(std::string receiver_account_number, double amount){
 
 void customer::change_password(){
     std::cout<<"Choose a New Password: \n";
-    std::cout<<"NOTE: CHOOSE A STRONG PASSWORD!!!";
+    std::cout<<"NOTE: CHOOSE A STRONG PASSWORD!!!\n";
     std::cin>>customer_password;
     //update csv
+}
+
+void customer::view_balance(){
+    std::cout<<"Your Current Balance is: "<< balance<< std::endl;
 }
 
 void customer::loadCSV(){
