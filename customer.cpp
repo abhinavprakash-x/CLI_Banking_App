@@ -28,11 +28,13 @@ void customer::withdraw(double amount){
             balance -= 100;
         }
     } else std::cout<<"Insufficient Funds\n";
+    //update transaction
     //update csv
 }
 
 void customer::deposit(double amount){
     balance += amount;
+    //update transaction
     //update csv
 }
 
