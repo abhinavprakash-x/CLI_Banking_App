@@ -2,7 +2,7 @@
 using namespace std;
 
 int main(){
-    //load data from csv
+    //change of plans use a database "MySQL" to store data
     
 
     //CLI Based Login System
@@ -24,6 +24,5 @@ int main(){
 
 
 
-    //update values
-    //save csv
+    //commit transactions made in the database
 }

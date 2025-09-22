@@ -16,8 +16,6 @@ class customer{
     public:
         customer();
         customer(std::string acc_no, std::string name, std::string passwd, double bal, double loan_bal, int attempts, int status);
-        void loadCSV();
-        void saveCSV();
         void withdraw(double amount);
         void deposit(double amount);
         void transfer(std::string receiver_account_number, double amount);

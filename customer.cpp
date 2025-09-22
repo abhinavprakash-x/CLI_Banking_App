@@ -28,14 +28,12 @@ void customer::withdraw(double amount){
             balance -= 100;
         }
     } else std::cout<<"Insufficient Funds\n";
-    //update transaction
-    //update csv
+    //update transaction in db
 }
 
 void customer::deposit(double amount){
     balance += amount;
-    //update transaction
-    //update csv
+    //update transaction in db
 }
 
 void customer::transfer(std::string receiver_account_number, double amount){
@@ -46,17 +44,9 @@ void customer::change_password(){
     std::cout<<"Choose a New Password: \n";
     std::cout<<"NOTE: CHOOSE A STRONG PASSWORD!!!\n";
     std::cin>>customer_password;
-    //update csv
+    //update db
 }
 
 void customer::view_balance(){
     std::cout<<"Your Current Balance is: "<< balance<< std::endl;
-}
-
-void customer::loadCSV(){
-    //to do
-}
-
-void customer::saveCSV(){
-    //to do
 }
