@@ -1,3 +1,4 @@
+//Include all required Headers
 #include<iostream>
 #include<vector>
 #include<fstream>
@@ -6,35 +7,37 @@
 #include"customer.h"
 #include"admin.h"
 
-using namespace std;
+
+//Functions needed in this program
+int main_menu();
+int admin_menu();
+int customer_menu();
+void save_all_customers(const std::vector<customer>& customers, const std::string& filename);
+std::vector<customer> load_all_customers(const std::string& filename);
+
+
 
 int main(){
-    const string FILENAME = "customers.csv";
-    vector <customer> all_customers = load_all_customers(FILENAME);
     //load data from csv file
+    const std::string FILENAME = "customers.csv";
+    std::vector <customer> all_customers = load_all_customers(FILENAME);
 
     
-
-    //CLI Based Login System
+    //CLI
     int repeat = 1, user_choice;
     do{
-        cout<<"CLI Based Banking Application\n";
-        cout<<"------------------------------\n";
-        cout<<"Main Menu \n";
-        cout<<"1. Login as Administrator \n";
-        cout<<"2. Login as Customer \n";
-        cout<<"3. Exit System \n";
-        cout<<"Choose Your Preferred Option: ";
-        cin>>user_choice;
-        if(user_choice == 1) cout<<"Admin"; //call admin menu
-        else if(user_choice == 2) cout<<"Customer"; //call customer menu
-        else if(user_choice == 3) return 0; //exit program NB: save data before exit
-        else cout<<"Wrong Option Selected";
+        user_choice = main_menu();
+        if(user_choice == 1){
+            //admin_menu();
+        }else if(user_choice == 2){
+            //customer_menu();
+        }else if(user_choice == 3){
+            save_all_customers(all_customers, FILENAME);
+            std::cout<< "Data Saved";
+            return 0;
+        }
+        else std::cout<<"Wrong Option Selected";
     } while(repeat == 1);
-
-
-
-    //save the file
 }
 
 
@@ -43,8 +46,43 @@ int main(){
 
 
 
+//Load values from csv to program memory
+std::vector<customer> load_all_customers(const std::string& filename) {
+    std::vector<customer> customers;
+    std::ifstream inFile(filename);
+    if (!inFile.is_open()) {
+        std::cout << "No existing data file found. Starting fresh." << std::endl;
+        return customers;
+    }
+    std::string line;
+    while (getline(inFile, line)) {
+        std::stringstream ss(line);
+        std::string token;
 
+        // Variables to hold the parsed data
+        std::string acc_no, name, passwd;
+        double bal, loan_bal;
+        int attempts, status;
 
+        // Parse the CSV line
+        getline(ss, token, ','); acc_no = token;
+        getline(ss, token, ','); name = token;
+        getline(ss, token, ','); passwd = token;
+        getline(ss, token, ','); bal = std::stod(token); // stod = string to double
+        getline(ss, token, ','); loan_bal = std::stod(token);
+        getline(ss, token, ','); attempts = std::stoi(token); // stoi = string to integer
+        getline(ss, token, ','); status = std::stoi(token);
+
+        // Create a customer object and add it to the vector
+        customers.emplace_back(acc_no, name, passwd, bal, loan_bal, attempts, status);
+    }
+
+    inFile.close();
+    std::cout << "Customer data loaded successfully." << std::endl;
+    return customers;
+}
+
+//Save values back to the CSV files
 void save_all_customers(const std::vector<customer>& customers, const std::string& filename) {
     std::ofstream outFile(filename);
     if (!outFile.is_open()) {
@@ -68,37 +106,12 @@ void save_all_customers(const std::vector<customer>& customers, const std::strin
     std::cout << "Data successfully saved." << std::endl;
 }
 
-std::vector<customer> load_all_customers(const std::string& filename) {
-    std::vector<customer> customers;
-    std::ifstream inFile(filename);
-    if (!inFile.is_open()) {
-        std::cout << "No existing data file found. Starting fresh." << std::endl;
-        return customers;
-    }
-    std::string line;
-    while (std::getline(inFile, line)) {
-        std::stringstream ss(line);
-        std::string token;
-
-        // Variables to hold the parsed data
-        std::string acc_no, name, passwd;
-        double bal, loan_bal;
-        int attempts, status;
-
-        // Parse the CSV line
-        std::getline(ss, token, ','); acc_no = token;
-        std::getline(ss, token, ','); name = token;
-        std::getline(ss, token, ','); passwd = token;
-        std::getline(ss, token, ','); bal = std::stod(token); // stod = string to double
-        std::getline(ss, token, ','); loan_bal = std::stod(token);
-        std::getline(ss, token, ','); attempts = std::stoi(token); // stoi = string to integer
-        std::getline(ss, token, ','); status = std::stoi(token);
-
-        // Create a customer object and add it to the vector
-        customers.emplace_back(acc_no, name, passwd, bal, loan_bal, attempts, status);
-    }
-
-    inFile.close();
-    std::cout << "Customer data loaded successfully." << std::endl;
-    return customers;
+int main_menu(){
+    int temp;
+    std::cout<<"***********************************\n";
+    std::cout<<"\t\t CLI Banking App \n";
+    std::cout<<"***********************************\n";
+    std::cout<<"\t\t\t (1) Admin Login \n\t\t\t (2) Customer Login \n\t\t\t (3) Exit Application";
+    std::cin>> temp;
+    return temp;
 }

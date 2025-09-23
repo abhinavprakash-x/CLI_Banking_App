@@ -1,0 +1,6 @@
+Password Encryption (hashing or something)
+Better UI
+Admin Password Not Hardcoded
+Use System("cls") in UI
+Add Passbook (Transaction) functionality
+Make utils.h containing all functions -> Make main.cpp cleaner
