@@ -28,12 +28,12 @@ void customer::withdraw(double amount){
             balance -= 100;
         }
     } else std::cout<<"Insufficient Funds\n";
-    //update transaction in db
+    //update files
 }
 
 void customer::deposit(double amount){
     balance += amount;
-    //update transaction in db
+    //update files
 }
 
 void customer::transfer(std::string receiver_account_number, double amount){
@@ -44,9 +44,17 @@ void customer::change_password(){
     std::cout<<"Choose a New Password: \n";
     std::cout<<"NOTE: CHOOSE A STRONG PASSWORD!!!\n";
     std::cin>>customer_password;
-    //update db
+    //update files
 }
 
 void customer::view_balance(){
     std::cout<<"Your Current Balance is: "<< balance<< std::endl;
 }
+
+std::string customer::get_account_number() const { return account_number; }
+std::string customer::get_customer_name() const { return customer_name; }
+std::string customer::get_password() const { return customer_password; }
+double customer::get_balance() const { return balance; }
+double customer::get_loan_amount() const { return loan_amount; }
+int customer::get_wrong_password_attempts() const { return wrong_password_attempts; }
+int customer::get_account_status() const { return account_status; }

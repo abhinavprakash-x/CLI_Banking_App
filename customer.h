@@ -21,6 +21,16 @@ class customer{
         void transfer(std::string receiver_account_number, double amount);
         void change_password();
         void view_balance();
+        void loadFile();
+        void saveFile();
+
+        std::string get_account_number() const;
+        std::string get_customer_name() const;
+        std::string get_password() const;
+        double get_balance() const;
+        double get_loan_amount() const;
+        int get_wrong_password_attempts() const;
+        int get_account_status() const;
 };
 
 #endif
