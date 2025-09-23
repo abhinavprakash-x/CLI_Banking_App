@@ -28,8 +28,6 @@ class customer{
         void transfer(std::string receiver_account_number, double amount);
         void change_password();
         void view_balance();
-        void loadFile();
-        void saveFile();
 
         //functions used to load data from csv to program
         std::string get_account_number() const;

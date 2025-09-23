@@ -10,8 +10,8 @@
 
 //Functions needed in this program
 int main_menu();
-int admin_menu();
-int customer_menu();
+void admin_menu();
+void customer_menu();
 void save_all_customers(const std::vector<customer>& customers, const std::string& filename);
 std::vector<customer> load_all_customers(const std::string& filename);
 
@@ -28,9 +28,9 @@ int main(){
     do{
         user_choice = main_menu();
         if(user_choice == 1){
-            //admin_menu();
+            admin_menu();
         }else if(user_choice == 2){
-            //customer_menu();
+            customer_menu();
         }else if(user_choice == 3){
             save_all_customers(all_customers, FILENAME);
             std::cout<< "Data Saved";
@@ -107,6 +107,7 @@ void save_all_customers(const std::vector<customer>& customers, const std::strin
 }
 
 int main_menu(){
+    system("cls");
     int temp;
     std::cout<<"***********************************\n";
     std::cout<<"\t\t CLI Banking App \n";
@@ -114,4 +115,37 @@ int main_menu(){
     std::cout<<"\t\t\t (1) Admin Login \n\t\t\t (2) Customer Login \n\t\t\t (3) Exit Application";
     std::cin>> temp;
     return temp;
+}
+
+void admin_menu(){
+    system("cls");
+    int user_choice;
+    std::cout<<"***********************************\n";
+    std::cout<<"\t\t CLI Banking App \n";
+    std::cout<<"***********************************\n";
+    std::cout<<"\t\t\t (1) Create New Bank Account \n";
+    std::cout<<"\t\t\t (2) Delete an Existing Bank Account \n";
+    std::cout<<"\t\t\t (3) Withdraw From a Bank Account \n";
+    std::cout<<"\t\t\t (4) Deposit to a Account \n";
+    std::cout<<"\t\t\t (5) Transfer Funds From one Account to Another \n";
+    std::cout<<"\t\t\t (6) Create New Bank Account \n";
+    std::cout<<"\t\t\t (7) View Bank Account Details \n";
+    std::cout<<"\t\t\t (8) Add Loan to a Bank Account \n";
+    std::cout<<"\t\t\t (9) Unlock a Bank Account \n";
+    std::cout<<"\t\t\t (10) Go Back To Main Menu \n";
+    std::cin>> user_choice;
+}
+
+void customer_menu(){
+    system("cls");
+    int user_choice;
+    std::cout<<"***********************************\n";
+    std::cout<<"\t\t CLI Banking App \n";
+    std::cout<<"***********************************\n";
+    std::cout<<"\t\t\t (1) Withdraw Funds \n";
+    std::cout<<"\t\t\t (2) Deposit Funds \n";
+    std::cout<<"\t\t\t (3) Transfer Funds \n";
+    std::cout<<"\t\t\t (4) View Balance \n";
+    std::cout<<"\t\t\t (5) Change Password \n";
+    std::cin>> user_choice;
 }
