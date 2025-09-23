@@ -5,11 +5,9 @@
 
 //Template to define admin info and behaviours.
 class admin{
-    private:
-        std::string admin_password = "Admin@123"; //password is hardcoded need to change this.
     public:
-        admin();
-        admin(std::string name, std::string passwd);
+        std::string admin_password = "Admin@123"; //password is hardcoded need to change this.
+        //admin();
         void create_account();
         void delete_account();
         void give_interest();
