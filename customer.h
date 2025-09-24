@@ -22,6 +22,8 @@ class customer{
         customer();
         customer(std::string acc_no, std::string name, std::string passwd, double bal, double loan_bal, int attempts, int status);
 
+        bool login();
+        
         //methods
         void withdraw(double amount);
         void deposit(double amount);

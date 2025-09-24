@@ -8,8 +8,12 @@ class admin{
     public:
         std::string admin_password = "Admin@123"; //password is hardcoded need to change this.
         //admin();
+        bool login();
         void create_account();
         void delete_account();
+        void withdraw();
+        void deposit();
+        void transfer();
         void give_interest();
         void deduct_bills();
         void unlock_account();

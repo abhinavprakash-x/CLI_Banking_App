@@ -10,10 +10,8 @@
 
 //Functions needed in this program
 int main_menu();
-int admin_menu();
-bool admin_login();
-int customer_menu();
-bool customer_login();
+int admin_menu(bool login);
+int customer_menu(bool login);
 void save_all_customers(const std::vector<customer>& customers, const std::string& filename);
 std::vector<customer> load_all_customers(const std::string& filename);
 
@@ -28,17 +26,47 @@ int main(){
     //CLI
     int repeat = 1, user_choice_main, user_choice_admin, user_choice_customer;
     do{
+        start:
         user_choice_main = main_menu();
+
         if(user_choice_main == 1){
-            user_choice_admin = admin_menu();
+
+            admin Admin_user;
+            bool login = Admin_user.login();
+            admin_start:
+            user_choice_admin = admin_menu(login);
+
+            switch(user_choice_admin){
+                case -1: goto start;
+                case 1: Admin_user.create_account(); break;
+                case 2: Admin_user.delete_account(); break;
+                case 3: Admin_user.withdraw(); break;
+                case 4: Admin_user.deposit(); break;
+                case 5: Admin_user.transfer(); break;
+                case 6: Admin_user.give_interest(); break;
+                case 7: Admin_user.deduct_bills(); break;
+                case 8: Admin_user.view_customer_info(); break;
+                case 9: Admin_user.give_loan(); break;
+                case 10: Admin_user.unlock_account(); break;
+                case 11: goto start;
+                default: std::cout<<"Wrong Option Selected\n";
+            }
+            goto admin_start;
+
         }else if(user_choice_main == 2){
-            user_choice_customer = customer_menu();
+
+            customer Customer_user;
+            bool login = Customer_user.login();
+            user_choice_customer = customer_menu(login);
+
         }else if(user_choice_main == 3){
+
             save_all_customers(all_customers, FILENAME);
             std::cout<< "Data Saved";
             return 0;
+
         }
-        else std::cout<<"Wrong Option Selected";
+        else std::cout<<"Wrong Option Selected\n";
     } while(repeat == 1);
 }
 
@@ -114,15 +142,14 @@ int main_menu(){
     std::cout<<"*******************************************************\n";
     std::cout<<"\t\t CLI Banking App \n";
     std::cout<<"*******************************************************\n";
-    std::cout<<"\t\t\t (1) Admin Login \n\t\t\t (2) Customer Login \n\t\t\t (3) Exit Application";
+    std::cout<<"\t (1) Admin Login \n\t (2) Customer Login \n\t (3) Exit Application\n";
     std::cin>> user_choice;
     return user_choice;
 }
 
-int admin_menu(){
-    int user_choice;
-    bool login = admin_login();
+int admin_menu(bool login){
     if(login){
+        int user_choice;
         system("cls");
         std::cout<<"*******************************************************\n";
         std::cout<<"\t\t CLI Banking App \n";
@@ -132,22 +159,24 @@ int admin_menu(){
         std::cout<<"\t (3) Withdraw From a Bank Account \n";
         std::cout<<"\t (4) Deposit to a Account \n";
         std::cout<<"\t (5) Transfer Funds From one Account to Another \n";
-        std::cout<<"\t (6) Create New Bank Account \n";
-        std::cout<<"\t (7) View Bank Account Details \n";
-        std::cout<<"\t (8) Add Loan to a Bank Account \n";
-        std::cout<<"\t (9) Unlock a Bank Account \n";
-        std::cout<<"\t (10) Go Back To Main Menu \n";
+        std::cout<<"\t (6) Give Interest to all Bank Accounts \n";
+        std::cout<<"\t (7) Deduct Bills from all Bank Accounts \n";
+        std::cout<<"\t (8) View Bank Account Details \n";
+        std::cout<<"\t (9) Add Loan to a Bank Account \n";
+        std::cout<<"\t (10) Unlock a Bank Account \n";
+        std::cout<<"\t (11) Go Back To Main Menu \n";
         std::cin>> user_choice;
         return user_choice;
     }else{
+        int temp;
         std::cout<<"Invalid Credentials";
-        std::cin>> user_choice;
+        std::cin>> temp;
+        return -1;
     }
 }
 
-int customer_menu(){
+int customer_menu(bool login){
     int user_choice;
-    bool login = customer_login();
     system("cls");
     std::cout<<"*******************************************************\n";
     std::cout<<"\t\t CLI Banking App \n";
@@ -159,17 +188,4 @@ int customer_menu(){
     std::cout<<"\t (5) Change Password \n";
     std::cin>> user_choice;
     return user_choice;
-}
-
-bool admin_login(){
-    admin Admin_user;
-    std::string passwd;
-    std::cout<<"Welcome Admin !!\nEnter Your Password to Continue: ";
-    std::cin>> passwd;
-    if(passwd == Admin_user.admin_password) return true;
-    else return false;
-}
-
-bool customer_login(){
-    //to do
 }
