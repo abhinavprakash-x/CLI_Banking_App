@@ -42,16 +42,16 @@ int main(){
 
             switch(user_choice_admin){
                 case -1: goto start;
-                case 1: Admin_user.create_account(); break;
-                case 2: Admin_user.delete_account(); break;
-                case 3: Admin_user.withdraw(); break;
-                case 4: Admin_user.deposit(); break;
-                case 5: Admin_user.transfer(); break;
-                case 6: Admin_user.give_interest(); break;
-                case 7: Admin_user.deduct_bills(); break;
-                case 8: Admin_user.view_customer_info(); break;
-                case 9: Admin_user.give_loan(); break;
-                case 10: Admin_user.unlock_account(); break;
+                case 1: Admin_user.create_account(); getch(); break;
+                case 2: Admin_user.delete_account(); getch(); break;
+                case 3: Admin_user.withdraw(); getch(); break;
+                case 4: Admin_user.deposit(); getch(); break;
+                case 5: Admin_user.transfer(); getch(); break;
+                case 6: Admin_user.give_interest(); getch(); break;
+                case 7: Admin_user.deduct_bills(); getch(); break;
+                case 8: Admin_user.view_customer_info(); getch(); break;
+                case 9: Admin_user.give_loan(); getch(); break;
+                case 10: Admin_user.unlock_account(); getch(); break;
                 case 11: goto start;
                 default: std::cout<<"Wrong Option Selected\n";
                          std::cout << "Press Any Key to continue...";
@@ -207,11 +207,11 @@ void customer_menu(customer& logged_in_customer) {
 
     // Now you can call methods on the specific logged_in_customer object
     switch (user_choice) {
-        case 1: logged_in_customer.withdraw(); break;
-        case 2: logged_in_customer.deposit(); break;
-        case 3: logged_in_customer.transfer(); break;
+        case 1: logged_in_customer.withdraw(); getch(); break;
+        case 2: logged_in_customer.deposit(); getch(); break;
+        case 3: logged_in_customer.transfer(); getch(); break;
         case 4: logged_in_customer.view_balance(); getch(); break;
-        case 5: logged_in_customer.change_password(); break;
+        case 5: logged_in_customer.change_password(); getch(); break;
         case 6: return;
         default: std::cout<< "Wrong Option Selected.\n";
                  std::cout << "Press Any Key to continue...";
