@@ -3,6 +3,7 @@
 #include<vector>
 #include<fstream>
 #include<sstream>
+#include<conio.h>
 
 #include"customer.h"
 #include"admin.h"
@@ -11,20 +12,22 @@
 //Functions needed in this program
 int main_menu();
 int admin_menu(bool login);
-int customer_menu(bool login);
+void customer_login(std::vector <customer> &all_customers);
+void customer_menu(customer &logged_in_customer);
 void save_all_customers(const std::vector<customer>& customers, const std::string& filename);
 std::vector<customer> load_all_customers(const std::string& filename);
 
 
 
 int main(){
+
     //load data from csv file
     const std::string FILENAME = "customers.csv";
     std::vector <customer> all_customers = load_all_customers(FILENAME);
 
     
     //CLI
-    int repeat = 1, user_choice_main, user_choice_admin, user_choice_customer;
+    int repeat = 1, user_choice_main, user_choice_admin;
     do{
         start:
         user_choice_main = main_menu();
@@ -50,14 +53,14 @@ int main(){
                 case 10: Admin_user.unlock_account(); break;
                 case 11: goto start;
                 default: std::cout<<"Wrong Option Selected\n";
+                         std::cout << "Press Any Key to continue...";
+                         getch();
             }
             goto admin_start;
 
         }else if(user_choice_main == 2){
 
-            customer Customer_user;
-            bool login = Customer_user.login();
-            user_choice_customer = customer_menu(login);
+            customer_login(all_customers);
 
         }else if(user_choice_main == 3){
 
@@ -136,6 +139,7 @@ void save_all_customers(const std::vector<customer>& customers, const std::strin
     std::cout << "Data successfully saved." << std::endl;
 }
 
+//The Home Screen CLI
 int main_menu(){
     system("cls");
     int user_choice;
@@ -143,16 +147,20 @@ int main_menu(){
     std::cout<<"\t\t CLI Banking App \n";
     std::cout<<"*******************************************************\n";
     std::cout<<"\t (1) Admin Login \n\t (2) Customer Login \n\t (3) Exit Application\n";
+    std::cout<<"Please Choose Your Desired Operation: ";
     std::cin>> user_choice;
     return user_choice;
 }
 
+//The Admin Menu after successful login
 int admin_menu(bool login){
     if(login){
         int user_choice;
         system("cls");
         std::cout<<"*******************************************************\n";
         std::cout<<"\t\t CLI Banking App \n";
+        std::cout<<"*******************************************************\n";
+        std::cout<<"Welcome Back! Admin User. \n";
         std::cout<<"*******************************************************\n";
         std::cout<<"\t (1) Create New Bank Account \n";
         std::cout<<"\t (2) Delete an Existing Bank Account \n";
@@ -164,28 +172,90 @@ int admin_menu(bool login){
         std::cout<<"\t (8) View Bank Account Details \n";
         std::cout<<"\t (9) Add Loan to a Bank Account \n";
         std::cout<<"\t (10) Unlock a Bank Account \n";
-        std::cout<<"\t (11) Go Back To Main Menu \n";
+        std::cout<<"\t (11) Logout \n";
+        std::cout<<"Please Choose Your Desired Operation: ";
         std::cin>> user_choice;
         return user_choice;
     }else{
-        int temp;
-        std::cout<<"Invalid Credentials";
-        std::cin>> temp;
+        std::cout<<"Invalid Credentials \n";
+        std::cout << "Press Any Key to continue...";
+        getch();
         return -1;
     }
 }
 
-int customer_menu(bool login){
+//Customer Menu after successfull Login done by customer
+void customer_menu(customer& logged_in_customer) {
     int user_choice;
     system("cls");
     std::cout<<"*******************************************************\n";
     std::cout<<"\t\t CLI Banking App \n";
     std::cout<<"*******************************************************\n";
-    std::cout<<"\t (1) Withdraw Funds \n";
-    std::cout<<"\t (2) Deposit Funds \n";
-    std::cout<<"\t (3) Transfer Funds \n";
-    std::cout<<"\t (4) View Balance \n";
-    std::cout<<"\t (5) Change Password \n";
+    std::cout << "\t\t Welcome, " << logged_in_customer.get_customer_name() << "!\n";
+    std::cout << "*******************************************************\n";
+    std::cout << "\t (1) Withdraw Funds \n";
+    std::cout << "\t (2) Deposit Funds \n";
+    std::cout << "\t (3) Transfer Funds \n";
+    std::cout << "\t (4) View Balance \n";
+    std::cout << "\t (5) Change Password \n";
+    std::cout << "\t (6) Logout \n";
+    std::cout<<"Please Choose Your Desired Operation: ";
     std::cin>> user_choice;
-    return user_choice;
+
+    // Now you can call methods on the specific logged_in_customer object
+    switch (user_choice) {
+        case 1: {
+            double amount;
+            std::cout << "Enter amount to withdraw: ";
+            std::cin >> amount;
+            logged_in_customer.withdraw(amount);
+            break;
+        }
+        case 4:
+            logged_in_customer.view_balance();
+            break;
+        // TODO: Implement other cases...
+        case 6:
+            return;
+        default: std::cout<<"Invalid Option Selected\n";
+    }
+    std::cout << "Press Any Key to continue...";
+    getch();
+}
+
+// Note: We pass the vector by reference (&) so we can modify the actual customer objects
+void customer_login(std::vector<customer>& all_customers) {
+
+    std::string acc_no, passwd;
+    std::cout << "Enter Account Number: ";
+    std::cin >> acc_no;
+    std::cout << "Enter Password: ";
+    std::cin >> passwd;
+
+    bool found_customer = false;
+
+    // Loop through the vector to find the matching customer
+    for (customer& user : all_customers) {
+
+        if (user.get_account_number() == acc_no) {
+            found_customer = true; // Found the account
+
+            if (user.get_password() == passwd) {
+                std::cout << "Login Successful!" << std::endl;
+                // Now that we've found the correct user, show them their menu
+                customer_menu(user);
+            } else {
+                std::cout<< "Invalid Password. \n";
+                std::cout << "Press Any Key to continue...";
+                getch();
+            }
+            return;
+        }
+    }
+
+    if (!found_customer) {
+        std::cout << "Account not found." << std::endl;
+        std::cout << "Press Any Key to continue...";
+        getch();
+    }
 }

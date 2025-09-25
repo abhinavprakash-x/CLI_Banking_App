@@ -55,7 +55,3 @@ double customer::get_balance() const { return balance; }
 double customer::get_loan_amount() const { return loan_amount; }
 int customer::get_wrong_password_attempts() const { return wrong_password_attempts; }
 int customer::get_account_status() const { return account_status; }
-
-bool customer::login(){
-    //todo
-}
