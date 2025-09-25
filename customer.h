@@ -28,6 +28,7 @@ class customer{
         void transfer();
         void change_password();
         void view_balance();
+        void pay_loan();
 
         //functions used to load data from csv to program
         std::string get_account_number() const;

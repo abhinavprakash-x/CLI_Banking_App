@@ -201,7 +201,8 @@ void customer_menu(customer& logged_in_customer) {
     std::cout << "\t (3) Transfer Funds \n";
     std::cout << "\t (4) View Balance \n";
     std::cout << "\t (5) Change Password \n";
-    std::cout << "\t (6) Logout \n";
+    std::cout << "\t (6) Pay Loan Dues \n";
+    std::cout << "\t (7) Logout \n";
     std::cout<<"Please Choose Your Desired Operation: ";
     std::cin>> user_choice;
 
@@ -212,7 +213,8 @@ void customer_menu(customer& logged_in_customer) {
         case 3: logged_in_customer.transfer(); getch(); break;
         case 4: logged_in_customer.view_balance(); getch(); break;
         case 5: logged_in_customer.change_password(); getch(); break;
-        case 6: return;
+        case 6: logged_in_customer.pay_loan(); getch(); break;
+        case 7: return;
         default: std::cout<< "Wrong Option Selected.\n";
                  std::cout << "Press Any Key to continue...";
                  getch();

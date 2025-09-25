@@ -54,6 +54,10 @@ void customer::view_balance(){
     std::cout<<"Your Current Balance is: "<< balance<< std::endl;
 }
 
+void customer::pay_loan(){
+    //todo
+}
+
 std::string customer::get_account_number() const { return account_number; }
 std::string customer::get_customer_name() const { return customer_name; }
 std::string customer::get_password() const { return customer_password; }
