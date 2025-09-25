@@ -1,6 +1,9 @@
 Password Encryption (hashing or something)
 Better UI
 Admin Password Not Hardcoded
-Use System("cls") in UI
+Add a Bank Vault (total money that bank currently has)
 Add Passbook (Transaction) functionality
 Make utils.h containing all functions -> Make main.cpp cleaner
+no negative amount withdrawal or deposition
+Add successful transaction message in every function.
+wrong pin attempts;

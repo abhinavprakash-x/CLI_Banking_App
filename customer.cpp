@@ -20,7 +20,10 @@ customer::customer(std::string acc_no, std::string name, std::string passwd, dou
     account_status = status;
 }
 
-void customer::withdraw(double amount){
+void customer::withdraw(){
+    float amount;
+    std::cout<< "Enter The Amount of Money to Withdraw: ";
+    std::cin>> amount;
     if(balance > amount){
         balance -= amount;
         if(balance < 500){
@@ -30,11 +33,14 @@ void customer::withdraw(double amount){
     } else std::cout<<"Insufficient Funds\n";
 }
 
-void customer::deposit(double amount){
+void customer::deposit(){
+    float amount;
+    std::cout<< "Enter The Amount of Money to Deposit: ";
+    std::cin>> amount;
     balance += amount;
 }
 
-void customer::transfer(std::string receiver_account_number, double amount){
+void customer::transfer(){
     //to do
 }
 

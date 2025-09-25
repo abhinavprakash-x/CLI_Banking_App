@@ -34,6 +34,7 @@ int main(){
 
         if(user_choice_main == 1){
 
+            user_choice_main = 0;
             admin Admin_user;
             bool login = Admin_user.login();
             admin_start:
@@ -60,6 +61,7 @@ int main(){
 
         }else if(user_choice_main == 2){
 
+            user_choice_main = 0;
             customer_login(all_customers);
 
         }else if(user_choice_main == 3){
@@ -187,6 +189,7 @@ int admin_menu(bool login){
 //Customer Menu after successfull Login done by customer
 void customer_menu(customer& logged_in_customer) {
     int user_choice;
+    customer_start:
     system("cls");
     std::cout<<"*******************************************************\n";
     std::cout<<"\t\t CLI Banking App \n";
@@ -204,23 +207,17 @@ void customer_menu(customer& logged_in_customer) {
 
     // Now you can call methods on the specific logged_in_customer object
     switch (user_choice) {
-        case 1: {
-            double amount;
-            std::cout << "Enter amount to withdraw: ";
-            std::cin >> amount;
-            logged_in_customer.withdraw(amount);
-            break;
-        }
-        case 4:
-            logged_in_customer.view_balance();
-            break;
-        // TODO: Implement other cases...
-        case 6:
-            return;
-        default: std::cout<<"Invalid Option Selected\n";
+        case 1: logged_in_customer.withdraw(); break;
+        case 2: logged_in_customer.deposit(); break;
+        case 3: logged_in_customer.transfer(); break;
+        case 4: logged_in_customer.view_balance(); getch(); break;
+        case 5: logged_in_customer.change_password(); break;
+        case 6: return;
+        default: std::cout<< "Wrong Option Selected.\n";
+                 std::cout << "Press Any Key to continue...";
+                 getch();
     }
-    std::cout << "Press Any Key to continue...";
-    getch();
+    goto customer_start;
 }
 
 // Note: We pass the vector by reference (&) so we can modify the actual customer objects
@@ -233,19 +230,20 @@ void customer_login(std::vector<customer>& all_customers) {
     std::cin >> passwd;
 
     bool found_customer = false;
-
     // Loop through the vector to find the matching customer
     for (customer& user : all_customers) {
 
         if (user.get_account_number() == acc_no) {
             found_customer = true; // Found the account
 
+            //check if account is locked TODO
             if (user.get_password() == passwd) {
                 std::cout << "Login Successful!" << std::endl;
                 // Now that we've found the correct user, show them their menu
                 customer_menu(user);
             } else {
                 std::cout<< "Invalid Password. \n";
+                //increase wrong password attempts
                 std::cout << "Press Any Key to continue...";
                 getch();
             }
