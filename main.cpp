@@ -41,16 +41,16 @@ int main(){
 
             switch(user_choice_admin){
                 case -1: goto start;
-                case 1: Admin_user.create_account(); std::cin.ignore(1000, '\n'); std::cin.get(); break;
-                case 2: Admin_user.delete_account(); std::cin.ignore(1000, '\n'); std::cin.get(); break;
-                case 3: Admin_user.withdraw(); std::cin.ignore(1000, '\n'); std::cin.get(); break;
-                case 4: Admin_user.deposit(); std::cin.ignore(1000, '\n'); std::cin.get(); break;
-                case 5: Admin_user.transfer(); std::cin.ignore(1000, '\n'); std::cin.get(); break;
-                case 6: Admin_user.give_interest(); std::cin.ignore(1000, '\n'); std::cin.get(); break;
-                case 7: Admin_user.deduct_bills(); std::cin.ignore(1000, '\n'); std::cin.get(); break;
-                case 8: Admin_user.view_customer_info(); std::cin.ignore(1000, '\n'); std::cin.get(); break;
-                case 9: Admin_user.give_loan(); std::cin.ignore(1000, '\n'); std::cin.get(); break;
-                case 10: Admin_user.unlock_account(); std::cin.ignore(1000, '\n'); std::cin.get(); break;
+                case 1: Admin_user.create_account(all_customers); std::cin.ignore(1000, '\n'); std::cin.get(); break;
+                case 2: Admin_user.delete_account(all_customers); std::cin.ignore(1000, '\n'); std::cin.get(); break;
+                case 3: Admin_user.withdraw(all_customers); std::cin.ignore(1000, '\n'); std::cin.get(); break;
+                case 4: Admin_user.deposit(all_customers); std::cin.ignore(1000, '\n'); std::cin.get(); break;
+                case 5: Admin_user.transfer(all_customers); std::cin.ignore(1000, '\n'); std::cin.get(); break;
+                case 6: Admin_user.give_interest(all_customers); std::cin.ignore(1000, '\n'); std::cin.get(); break;
+                case 7: Admin_user.deduct_bills(all_customers); std::cin.ignore(1000, '\n'); std::cin.get(); break;
+                case 8: Admin_user.view_customer_info(all_customers); std::cin.ignore(1000, '\n'); std::cin.get(); break;
+                case 9: Admin_user.give_loan(all_customers); std::cin.ignore(1000, '\n'); std::cin.get(); break;
+                case 10: Admin_user.unlock_account(all_customers); std::cin.ignore(1000, '\n'); std::cin.get(); break;
                 case 11: goto start;
                 default: std::cout<<"Wrong Option Selected\n";
                          std::cout << "Press Any Key to continue...";
@@ -95,12 +95,13 @@ std::vector<customer> load_all_customers(const std::string& filename) {
         std::string token;
 
         // Variables to hold the parsed data
-        std::string acc_no, name, passwd;
+        long acc_no;
+        std::string name, passwd;
         double bal, loan_bal;
         int attempts, status;
 
         // Parse the CSV line
-        getline(ss, token, ','); acc_no = token;
+        getline(ss, token, ','); acc_no = std::stol(token);
         getline(ss, token, ','); name = token;
         getline(ss, token, ','); passwd = token;
         getline(ss, token, ','); bal = std::stod(token); // stod = string to double
@@ -148,7 +149,7 @@ int main_menu(){
     std::cout<<"*******************************************************\n";
     std::cout<<"\t\t CLI Banking App \n";
     std::cout<<"*******************************************************\n";
-    std::cout<<"\t (1) Admin Login \n\t (2) Customer Login \n\t (3) Exit Application\n";
+    std::cout<<"\t (1) Admin Login \n\t (2) Customer Login \n\t (3) Exit Application and Save Data\n";
     std::cout<<"Please Choose Your Desired Operation: ";
     std::cin>> user_choice;
     return user_choice;
@@ -227,7 +228,8 @@ void customer_menu(customer& logged_in_customer, std::vector<customer>& all_cust
 // Note: We pass the vector by reference (&) so we can modify the actual customer objects
 void customer_login(std::vector<customer>& all_customers) {
 
-    std::string acc_no, passwd;
+    long acc_no;
+    std::string passwd;
     std::cout << "Enter Account Number: ";
     std::cin >> acc_no;
     std::cout << "Enter Password: ";

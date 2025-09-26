@@ -1,7 +1,7 @@
 #include"customer.h"
 
 customer::customer(){
-    account_number = "";
+    account_number = 0;
     customer_name = "";
     customer_password = "";
     balance = 0.0;
@@ -10,7 +10,7 @@ customer::customer(){
     account_status = 0;
 }
 
-customer::customer(std::string acc_no, std::string name, std::string passwd, double bal, double loan_bal, int attempts, int status){
+customer::customer(long acc_no, std::string name, std::string passwd, double bal, double loan_bal, int attempts, int status){
     account_number = acc_no;
     customer_name = name;
     customer_password = passwd;
@@ -31,12 +31,12 @@ void customer::withdraw(double amount){
     if(amount<0) {std::cout<<"Negative Money !!"; return;}
     if(balance > amount){
         balance -= amount;
+        std::cout<< "Transaction Successful.\n";
         if(balance < MINIMUM_BALANCE){
-            std::cout<<"Balance Below Minimum Amount ₹100 deucted. \n";
+            std::cout<<"Balance Below Minimum Amount Rs.100 deucted. \n";
             balance -= MINIMUM_BALANCE_CHARGE;
         }
     } else std::cout<<"Insufficient Funds\n";
-    std::cout<< "Transaction Successfull.\n";
 }
 
 void customer::deposit(){
@@ -49,12 +49,12 @@ void customer::deposit(){
 void customer::deposit(double amount){
     if(amount<0) {std::cout<<"Negative Money !!"; return;}
     balance += amount;
-    std::cout<< "Transaction Successfull.\n";
+    std::cout<< "Transaction Successful.\n";
 }
 
 void customer::transfer(std::vector<customer>& all_customers){
 
-    std::string receiver_account_no;
+    long receiver_account_no;
     float amount;
     std::cout<<"Enter the Account Number to Transfer Funds: ";
     std::cin>> receiver_account_no;
@@ -106,7 +106,7 @@ void customer::pay_loan(){
     std::cout<< "Transaction Successfull.\n";
 }
 
-std::string customer::get_account_number() const { return account_number; }
+long customer::get_account_number() const { return account_number; }
 std::string customer::get_customer_name() const { return customer_name; }
 std::string customer::get_password() const { return customer_password; }
 double customer::get_balance() const { return balance; }

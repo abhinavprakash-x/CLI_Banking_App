@@ -11,3 +11,5 @@ function to update customer information
 add useless info like gender, aadhaar number, etc. (maybe)
 to unlock account aadhar card info must be shared (maybe)
 pin must contain letter alphabets etc.
+
+add a main menu item showing details of application and creator info, version info, etc

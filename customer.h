@@ -1,7 +1,8 @@
 #ifndef CUSTOMER_H
 #define CUSTOMER_H
-#define MINIMUM_BALANCE 500
-#define MINIMUM_BALANCE_CHARGE 100
+
+static constexpr double MINIMUM_BALANCE = 500.0;
+static constexpr double MINIMUM_BALANCE_CHARGE = 100.0;
 
 #include<iostream>
 #include<vector>
@@ -12,7 +13,7 @@ class customer{
     private:
 
         //customer information
-        std::string account_number;
+        long account_number;
         std::string customer_name;
         std::string customer_password;
         double balance;
@@ -26,7 +27,7 @@ class customer{
 
         //constructors
         customer();
-        customer(std::string acc_no, std::string name, std::string passwd, double bal, double loan_bal, int attempts, int status);
+        customer(long acc_no, std::string name, std::string passwd, double bal, double loan_bal, int attempts, int status);
         
         //methods
         void withdraw();
@@ -39,7 +40,7 @@ class customer{
         void pay_loan();
 
         //functions used to load data from csv to program
-        std::string get_account_number() const;
+        long get_account_number() const;
         std::string get_customer_name() const;
         std::string get_password() const;
         double get_balance() const;
