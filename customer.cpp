@@ -1,4 +1,5 @@
 #include"customer.h"
+#include<vector>
 
 customer::customer(){
     account_number = "";
@@ -24,6 +25,11 @@ void customer::withdraw(){
     float amount;
     std::cout<< "Enter The Amount of Money to Withdraw: ";
     std::cin>> amount;
+    this->withdraw(amount);
+}
+
+void customer::withdraw(double amount){
+    if(amount<0) {std::cout<<"Negative Money !!"; return;}
     if(balance > amount){
         balance -= amount;
         if(balance < 500){
@@ -31,31 +37,74 @@ void customer::withdraw(){
             balance -= 100;
         }
     } else std::cout<<"Insufficient Funds\n";
+    std::cout<< "Transaction Successfull.\n";
 }
 
 void customer::deposit(){
     float amount;
     std::cout<< "Enter The Amount of Money to Deposit: ";
     std::cin>> amount;
-    balance += amount;
+    this->deposit(amount);
 }
 
-void customer::transfer(){
-    //to do
+void customer::deposit(double amount){
+    if(amount<0) {std::cout<<"Negative Money !!"; return;}
+    balance += amount;
+    std::cout<< "Transaction Successfull.\n";
+}
+
+void customer::transfer(std::vector<customer>& all_customers){
+
+    std::string receiver_account_no;
+    float amount;
+    std::cout<<"Enter the Account Number to Transfer Funds: ";
+    std::cin>> receiver_account_no;
+    std::cout<< "Enter The Amount of Money to Transfer: ";
+    std::cin>> amount;
+    customer *receiver = nullptr;
+
+    for(customer &user: all_customers){
+        if(user.get_account_number() == receiver_account_no){
+            receiver = &user;
+            break;
+        }
+    }
+
+    if(receiver!=nullptr){
+        this->withdraw(amount);
+        receiver->deposit(amount);
+    }
 }
 
 void customer::change_password(){
     std::cout<<"Choose a New Password: \n";
     std::cout<<"NOTE: CHOOSE A STRONG PASSWORD!!!\n";
     std::cin>>customer_password;
+    std::cout<< "Password Updated Successfully.\n";
+
 }
 
 void customer::view_balance(){
     std::cout<<"Your Current Balance is: "<< balance<< std::endl;
+    std::cout<<"You Have Loan Due of: "<< loan_amount<< std::endl;
 }
 
 void customer::pay_loan(){
-    //todo
+    std::cout<<"The Amount Will be Deducted from your Account.\n";
+    float amount;
+    std::cout<< "Enter The Amount of Money to Pay Loan: ";
+    std::cin>> amount;
+    if(amount<0) {std::cout<<"Negative Money !!"; return;}
+    if(amount>loan_amount) {std::cout<<"You Don't have that much Due"; return;}
+    if(balance > amount){
+        balance -= amount;
+        loan_amount -= amount;
+        if(balance < 500){
+            std::cout<<"Balance Below Minimum Amount Rs.100 deucted. \n";
+            balance -= 100;
+        }
+    } else std::cout<<"Insufficient Funds\n";
+    std::cout<< "Transaction Successfull.\n";
 }
 
 std::string customer::get_account_number() const { return account_number; }

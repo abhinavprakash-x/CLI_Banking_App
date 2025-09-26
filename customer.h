@@ -24,8 +24,10 @@ class customer{
         
         //methods
         void withdraw();
+        void withdraw(double amount);
         void deposit();
-        void transfer();
+        void deposit(double amount);
+        void transfer(std::vector<customer>& all_customers);
         void change_password();
         void view_balance();
         void pay_loan();
