@@ -17,10 +17,13 @@ class customer{
         std::string customer_password;
         double balance;
         double loan_amount;
+        
+        public:
+
+        //These infomation are stored in public so they can be accessed and modified directly while program is executing
         int wrong_password_attempts;
         int account_status;
 
-    public:
         //constructors
         customer();
         customer(std::string acc_no, std::string name, std::string passwd, double bal, double loan_bal, int attempts, int status);

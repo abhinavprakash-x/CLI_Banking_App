@@ -6,7 +6,7 @@ Add Passbook (Transaction) functionality
 Make utils.h containing all functions -> Make main.cpp cleaner
 no negative amount withdrawal or deposition
 Add successful transaction message in every function.
-wrong pin attempts;
+wrong pin attempts; account locking;
 function to update customer information
 add useless info like gender, aadhaar number, etc. (maybe)
 to unlock account aadhar card info must be shared (maybe)

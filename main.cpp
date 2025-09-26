@@ -241,13 +241,15 @@ void customer_login(std::vector<customer>& all_customers) {
             found_customer = true; // Found the account
 
             //check if account is locked TODO
-            if (user.get_password() == passwd) {
+            if (user.get_password() == passwd && user.account_status == 0) {
                 std::cout << "Login Successful!" << std::endl;
+                user.wrong_password_attempts = 0;
                 // Now that we've found the correct user, show them their menu
                 customer_menu(user, all_customers);
             } else {
-                std::cout<< "Invalid Password. \n";
-                //increase wrong password attempts
+                std::cout<< "Invalid Password or Account Locked.\n";
+                user.wrong_password_attempts++;
+                if(user.wrong_password_attempts >= 3) user.account_status = 1;
                 std::cout << "Press Any Key to continue...";
                 std::cin.ignore(1000, '\n');
                 std::cin.get();
