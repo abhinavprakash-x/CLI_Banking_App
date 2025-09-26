@@ -3,7 +3,6 @@
 #include<vector>
 #include<fstream>
 #include<sstream>
-#include<conio.h>
 
 #include"customer.h"
 #include"admin.h"
@@ -42,20 +41,21 @@ int main(){
 
             switch(user_choice_admin){
                 case -1: goto start;
-                case 1: Admin_user.create_account(); getch(); break;
-                case 2: Admin_user.delete_account(); getch(); break;
-                case 3: Admin_user.withdraw(); getch(); break;
-                case 4: Admin_user.deposit(); getch(); break;
-                case 5: Admin_user.transfer(); getch(); break;
-                case 6: Admin_user.give_interest(); getch(); break;
-                case 7: Admin_user.deduct_bills(); getch(); break;
-                case 8: Admin_user.view_customer_info(); getch(); break;
-                case 9: Admin_user.give_loan(); getch(); break;
-                case 10: Admin_user.unlock_account(); getch(); break;
+                case 1: Admin_user.create_account(); std::cin.ignore(1000, '\n'); std::cin.get(); break;
+                case 2: Admin_user.delete_account(); std::cin.ignore(1000, '\n'); std::cin.get(); break;
+                case 3: Admin_user.withdraw(); std::cin.ignore(1000, '\n'); std::cin.get(); break;
+                case 4: Admin_user.deposit(); std::cin.ignore(1000, '\n'); std::cin.get(); break;
+                case 5: Admin_user.transfer(); std::cin.ignore(1000, '\n'); std::cin.get(); break;
+                case 6: Admin_user.give_interest(); std::cin.ignore(1000, '\n'); std::cin.get(); break;
+                case 7: Admin_user.deduct_bills(); std::cin.ignore(1000, '\n'); std::cin.get(); break;
+                case 8: Admin_user.view_customer_info(); std::cin.ignore(1000, '\n'); std::cin.get(); break;
+                case 9: Admin_user.give_loan(); std::cin.ignore(1000, '\n'); std::cin.get(); break;
+                case 10: Admin_user.unlock_account(); std::cin.ignore(1000, '\n'); std::cin.get(); break;
                 case 11: goto start;
                 default: std::cout<<"Wrong Option Selected\n";
                          std::cout << "Press Any Key to continue...";
-                         getch();
+                         std::cin.ignore(1000, '\n');
+                         std::cin.get();
             }
             goto admin_start;
 
@@ -181,13 +181,14 @@ int admin_menu(bool login){
     }else{
         std::cout<<"Invalid Credentials \n";
         std::cout << "Press Any Key to continue...";
-        getch();
+        std::cin.ignore(1000, '\n');
+        std::cin.get();
         return -1;
     }
 }
 
 //Customer Menu after successfull Login done by customer
-void customer_menu(customer& logged_in_customer) {
+void customer_menu(customer& logged_in_customer, std::vector<customer>& all_customers) {
     int user_choice;
     customer_start:
     system("cls");
@@ -208,16 +209,17 @@ void customer_menu(customer& logged_in_customer) {
 
     // Now you can call methods on the specific logged_in_customer object
     switch (user_choice) {
-        case 1: logged_in_customer.withdraw(); getch(); break;
-        case 2: logged_in_customer.deposit(); getch(); break;
-        case 3: logged_in_customer.transfer(); getch(); break;
-        case 4: logged_in_customer.view_balance(); getch(); break;
-        case 5: logged_in_customer.change_password(); getch(); break;
-        case 6: logged_in_customer.pay_loan(); getch(); break;
+        case 1: logged_in_customer.withdraw(); std::cin.ignore(1000, '\n'); std::cin.get(); break;
+        case 2: logged_in_customer.deposit(); std::cin.ignore(1000, '\n'); std::cin.get(); break;
+        case 3: logged_in_customer.transfer(all_customers); std::cin.ignore(1000, '\n'); std::cin.get(); break;
+        case 4: logged_in_customer.view_balance(); std::cin.ignore(1000, '\n'); std::cin.get(); break;
+        case 5: logged_in_customer.change_password(); std::cin.ignore(1000, '\n'); std::cin.get(); break;
+        case 6: logged_in_customer.pay_loan(); std::cin.ignore(1000, '\n'); std::cin.get(); break;
         case 7: return;
         default: std::cout<< "Wrong Option Selected.\n";
                  std::cout << "Press Any Key to continue...";
-                 getch();
+                 std::cin.ignore(1000, '\n');
+                 std::cin.get();
     }
     goto customer_start;
 }
@@ -242,12 +244,13 @@ void customer_login(std::vector<customer>& all_customers) {
             if (user.get_password() == passwd) {
                 std::cout << "Login Successful!" << std::endl;
                 // Now that we've found the correct user, show them their menu
-                customer_menu(user);
+                customer_menu(user, all_customers);
             } else {
                 std::cout<< "Invalid Password. \n";
                 //increase wrong password attempts
                 std::cout << "Press Any Key to continue...";
-                getch();
+                std::cin.ignore(1000, '\n');
+                std::cin.get();
             }
             return;
         }
@@ -256,6 +259,7 @@ void customer_login(std::vector<customer>& all_customers) {
     if (!found_customer) {
         std::cout << "Account not found." << std::endl;
         std::cout << "Press Any Key to continue...";
-        getch();
+        std::cin.ignore(1000, '\n');
+        std::cin.get();
     }
 }

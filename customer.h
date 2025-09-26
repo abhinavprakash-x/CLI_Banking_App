@@ -1,7 +1,10 @@
 #ifndef CUSTOMER_H
 #define CUSTOMER_H
+#define MINIMUM_BALANCE 500
+#define MINIMUM_BALANCE_CHARGE 100
 
 #include<iostream>
+#include<vector>
 
 //Template for customer information and abilities.
 class customer{

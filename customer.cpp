@@ -1,5 +1,4 @@
 #include"customer.h"
-#include<vector>
 
 customer::customer(){
     account_number = "";
@@ -32,9 +31,9 @@ void customer::withdraw(double amount){
     if(amount<0) {std::cout<<"Negative Money !!"; return;}
     if(balance > amount){
         balance -= amount;
-        if(balance < 500){
+        if(balance < MINIMUM_BALANCE){
             std::cout<<"Balance Below Minimum Amount ₹100 deucted. \n";
-            balance -= 100;
+            balance -= MINIMUM_BALANCE_CHARGE;
         }
     } else std::cout<<"Insufficient Funds\n";
     std::cout<< "Transaction Successfull.\n";
