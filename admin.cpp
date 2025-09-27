@@ -56,7 +56,7 @@ void admin::create_account(std::vector<customer>& all_customers){
 
     // --- Create and Add the New Customer Object ---
     // Customer constructor: acc_no, name, passwd, bal, loan_bal, attempts, status
-    customer new_customer(new_acc_no_str, name, password, initial_deposit, 0.0, 0, 0);
+    customer new_customer(new_acc_no_str, name, password, initial_deposit, 0.0, 4, 1);
     all_customers.push_back(new_customer);
 
     // --- Provide Feedback ---
@@ -145,8 +145,8 @@ void admin::transfer(std::vector<customer>& all_customers){
         customer &sender = all_customers[sender_index];
         customer &receiver = all_customers[receiver_index];
         
-        if(sender.withdraw(amount)){
-            receiver.deposit(amount);
+        if(sender.withdraw(amount,true)){
+            receiver.deposit(amount,true);
             std::cout << "Transaction Successful.\n";
         }
     }else{

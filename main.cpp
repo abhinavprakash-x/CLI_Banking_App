@@ -298,6 +298,7 @@ void about_menu(){
     std::cout<<"Minimum Balance Penalty: "<< MINIMUM_BALANCE_CHARGE<<" will be deducted from your Acccount.\n";
     std::cout<<"Interest Rate S/B Accounts: "<< INTEREST_RATE * 100<< "%\n";
     std::cout<<"Loan Charges: "<< LOAN_CHARGE * 100 <<"%\n";
+    std::cout<<"Maintenance Charges: "<< MAINTENANCE_CHARGE<< std::endl;
 
     std::cout<<"------------------------------------------------------------\n";
     std::cout<<"Application Name: CLI Banking App\n";
