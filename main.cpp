@@ -14,6 +14,7 @@ int main_menu();
 int admin_menu(bool login);
 void customer_login(std::vector <customer> &all_customers);
 void customer_menu(customer &logged_in_customer, std::vector <customer> &all_customers);
+int option_input();
 void save_all_customers(const std::vector<customer>& customers, const std::string& filename);
 std::vector<customer> load_all_customers(const std::string& filename);
 
@@ -156,7 +157,7 @@ int main_menu(){
     std::cout<<"*******************************************************\n";
     std::cout<<"\t (1) Admin Login \n\t (2) Customer Login \n\t (3) Exit Application and Save Data \n\t (4) Important Information \n";
     std::cout<<"Please Choose Your Desired Operation: ";
-    std::cin>> user_choice;
+    user_choice = option_input();
     return user_choice;
 }
 
@@ -182,7 +183,7 @@ int admin_menu(bool login){
         std::cout<<"\t (10) Unlock a Bank Account \n";
         std::cout<<"\t (11) Logout \n";
         std::cout<<"Please Choose Your Desired Operation: ";
-        std::cin>> user_choice;
+        user_choice = option_input();
         return user_choice;
     }else{
         std::cout<<"Invalid Credentials \n";
@@ -211,7 +212,7 @@ void customer_menu(customer& logged_in_customer, std::vector<customer>& all_cust
     std::cout << "\t (6) Pay Loan Dues \n";
     std::cout << "\t (7) Logout \n";
     std::cout<<"Please Choose Your Desired Operation: ";
-    std::cin>> user_choice;
+    user_choice = option_input();
 
     // Now you can call methods on the specific logged_in_customer object
     switch (user_choice) {
@@ -302,9 +303,23 @@ void about_menu(){
 
     std::cout<<"------------------------------------------------------------\n";
     std::cout<<"Application Name: CLI Banking App\n";
-    std::cout<<"Version: 1.0\n";
+    std::cout<<"Version: 1.1\n";
     std::cout<<"Developed By: Abhinav Prakash\n";
     std::cout<<"To Clone This Project: github.com/abhinavprakash-x/link \n";
     std::cin.ignore(1000,'\n');
     std::cin.get();
+}
+
+int option_input(){
+    int user_choice;
+    std::cin >> user_choice;
+
+    while (std::cin.fail()) {
+        std::cout << "Invalid input. Please enter a number." << std::endl;
+        std::cin.clear(); // Clear the error flag
+        std::cin.ignore(1000, '\n'); // Discard bad input
+        std::cin >> user_choice;
+    }
+
+    return user_choice;
 }

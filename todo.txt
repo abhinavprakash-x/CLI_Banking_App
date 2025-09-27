@@ -1,8 +1,4 @@
 Password Encryption (hashing or something)
-Better UI
 Admin Password Not Hardcoded
 Add Passbook (Transaction) functionality
-Make utils.h containing all functions -> Make main.cpp cleaner
-function to update customer information
-pin must contain letter alphabets etc.
 magic numbers and admin password from config file
