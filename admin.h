@@ -18,7 +18,7 @@ class admin{
 
         //these two functions should be execute automatically every month/year but I dont know how to do that so Admin will manually do this
         void give_interest(std::vector<customer>& all_customers, double interest_rate);
-        void loan_interest(std::vector<customer>& all_customers, double loan_charge, double maintenance_charge);
+        void loan_interest(std::vector<customer>& all_customers, const AppConfig& config);
 
         void unlock_account(std::vector<customer>& all_customers);
         void give_loan(std::vector<customer>& all_customers);

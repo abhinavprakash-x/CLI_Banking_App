@@ -22,7 +22,7 @@ AppConfig load_config(const std::string& filename);
 int main(){
 
     //load data from csv file
-    const AppConfig config = load_config("config1.txt");
+    const AppConfig config = load_config("config.txt");
     const std::string FILENAME = "customers.csv";
     std::vector <customer> all_customers = load_all_customers(FILENAME);
 
@@ -48,7 +48,7 @@ int main(){
                         case 4: Admin_user.deposit(all_customers); break;
                         case 5: Admin_user.transfer(all_customers, config); break;
                         case 6: Admin_user.give_interest(all_customers, config.interest_rate); break;
-                        case 7: Admin_user.loan_interest(all_customers, config.loan_charge, config.maintenance_charge); break;
+                        case 7: Admin_user.loan_interest(all_customers, config); break;
                         case 8: Admin_user.view_customer_info(all_customers); break;
                         case 9: Admin_user.give_loan(all_customers); break;
                         case 10: Admin_user.unlock_account(all_customers); break;
@@ -68,14 +68,13 @@ int main(){
 
         }else if(user_choice_main == 3){
 
-            save_all_customers(all_customers, FILENAME);
-            std::cout<< "Data Saved";
-            return 0;
+            about_menu(config);
 
         }else if(user_choice_main == 4){
 
-            about_menu(config);
-
+            save_all_customers(all_customers, FILENAME);
+            std::cout<< "Data Saved";
+            return 0;
         }
         else std::cout<<"Wrong Option Selected\n";
     }
@@ -155,7 +154,7 @@ int main_menu(){
     std::cout<<"*******************************************************\n";
     std::cout<<"\t\t CLI Banking App \n";
     std::cout<<"*******************************************************\n";
-    std::cout<<"\t (1) Admin Login \n\t (2) Customer Login \n\t (3) Exit Application and Save Data \n\t (4) Important Information \n";
+    std::cout<<"\t (1) Admin Login \n\t (2) Customer Login \n\t (3) Important Information \n\t (4) Exit Application and Save Data\n";
     std::cout<<"Please Choose Your Desired Operation: ";
     return option_input();
 }
@@ -334,6 +333,8 @@ AppConfig load_config(const std::string& filename){
             newConfigFile << "minimum_balance_charge = " << config.minimum_balance_charge << "\n";
             newConfigFile.close();
             std::cout << "Configuration saved to config.txt successfully." << std::endl;
+            std::cin.ignore(1000, '\n');
+            std::cin.get();
         } else {
             std::cerr << "Error: Could not create config file!" << std::endl;
             exit(1);

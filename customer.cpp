@@ -24,10 +24,10 @@ void customer::withdraw(const AppConfig& config){
     float amount;
     std::cout<< "Enter The Amount of Money to Withdraw: ";
     std::cin>> amount;
-    this->withdraw(amount, false, config);
+    this->withdraw(amount, config, false);
 }
 
-bool customer::withdraw(double amount, bool silent, const AppConfig& config){
+bool customer::withdraw(double amount, const AppConfig& config, bool silent){
 
     if(amount<0) {std::cout<<"Negative Money !!"; return false;}
 
@@ -80,7 +80,7 @@ void customer::transfer(std::vector<customer>& all_customers, const AppConfig& c
 
     if(receiver != nullptr){
         // Only deposit if the withdrawal from this account succeeds
-        if(this->withdraw(amount,false, config)){
+        if(this->withdraw(amount, config, false)){
             receiver->deposit(amount, false);
             std::cout << "Transfer to account " << receiver_account_no << " was successful.\n";
         }
@@ -109,7 +109,7 @@ void customer::pay_loan(const AppConfig& config){
     std::cin>> amount;
     if(amount<0) {std::cout<<"Negative Money !!"; return;}
     if(amount>loan_amount) {std::cout<<"You Don't have that much Due"; return;}
-    if (this->withdraw(amount, true, config)) {
+    if (this->withdraw(amount, config, true)) {
         this->edit_loan_amount(this->get_loan_amount() - amount);
         std::cout << "Loan payment of Rs." << amount << " was successful.\n";
         std::cout << "Remaining Loan Due: Rs." << this->get_loan_amount() << std::endl;

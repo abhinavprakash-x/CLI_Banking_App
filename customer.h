@@ -35,7 +35,7 @@ class customer{
         
         //methods
         void withdraw(const AppConfig& config);
-        bool withdraw(double amount, bool silent = false, const AppConfig& config);
+        bool withdraw(double amount, const AppConfig& config, bool silent = false);
         void deposit();
         bool deposit(double amount, bool silent = false);
         void transfer(std::vector<customer>& all_customers, const AppConfig& config);

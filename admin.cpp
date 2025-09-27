@@ -101,7 +101,7 @@ void admin::withdraw(std::vector<customer>& all_customers, const AppConfig& conf
     
     if (index != -1) {
         customer& current_customer = all_customers[index];
-        current_customer.withdraw(amount, false, config); // Use the customer's own deposit method
+        current_customer.withdraw(amount, config, false); // Use the customer's own deposit method
     } else {
         std::cout << "Error: Customer not found." << std::endl;
     }
@@ -144,7 +144,7 @@ void admin::transfer(std::vector<customer>& all_customers, const AppConfig& conf
         customer &sender = all_customers[sender_index];
         customer &receiver = all_customers[receiver_index];
         
-        if(sender.withdraw(amount, true, config)){
+        if(sender.withdraw(amount, config, true)){
             receiver.deposit(amount, true);
             std::cout << "Transaction Successful.\n";
         }
@@ -165,10 +165,10 @@ void admin::give_interest(std::vector<customer>& all_customers, double interest_
 
 }
 
-void admin::loan_interest(std::vector<customer>& all_customers, double loan_charge, double maintenance_charge) {
+void admin::loan_interest(std::vector<customer>& all_customers, const AppConfig& config) {
     for (customer& user : all_customers) {
-        user.withdraw(maintenance_charge, true);
-        double interest_amount = user.get_loan_amount() * loan_charge;
+        user.withdraw(config.maintenance_charge, config, true);
+        double interest_amount = user.get_loan_amount() * config.loan_charge;
         user.edit_loan_amount(user.get_loan_amount() + interest_amount);
     }
     std::cout << "Maintenance Charges Deducted from all Accounts.\nLoan Interest Added to Accounts having loan.\n";
