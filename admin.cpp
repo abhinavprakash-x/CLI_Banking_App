@@ -142,27 +142,57 @@ void admin::transfer(std::vector<customer>& all_customers){
     int receiver_index = find_customer(all_customers, receiver_acc_no);
     
     if(sender_index != -1 && receiver_index != -1){
-
         customer &sender = all_customers[sender_index];
         customer &receiver = all_customers[receiver_index];
-        sender.withdraw(amount);
-        receiver.deposit(amount);
-    
+        
+        if(sender.withdraw(amount)){
+            receiver.deposit(amount);
+            std::cout << "Transaction Successful.\n";
+        }
     }else{
-        std::cout<<"Enter Correct Account Number.\n";
+        std::cout << "Transaction Failed: Invalid Sender or Receiver Account Number.\n";
     }
+
 }
 
 void admin::give_interest(std::vector<customer>& all_customers){
-    //todo
+
+    for(customer &user : all_customers){
+        double interest_amount = user.get_balance() * INTEREST_RATE;
+        // Deposit the interest amount silently
+        user.deposit(interest_amount, true);
+    }
+    std::cout << "Interest of " << INTEREST_RATE * 100 << "% has been successfully applied to all accounts." << std::endl;
+
 }
 
-void admin::deduct_bills(std::vector<customer>& all_customers){
-    //todo
+void admin::loan_interest(std::vector<customer>& all_customers){
+    
+    for(customer &user : all_customers){
+
+        //for all users
+        user.withdraw(MAINTENANCE_CHARGE,true);
+        //for users having loan
+        double interest_amount = user.get_loan_amount() * LOAN_CHARGE;
+        user.edit_loan_amount(user.get_loan_amount() + interest_amount);
+    }
+    std::cout<<"Maintenance Charges Deducted from all Accounts.\nLoan Interest Added to Accounts having loan.\n";
 }
 
 void admin::unlock_account(std::vector<customer>& all_customers){
-    //todo
+    long acc_no;
+    std::cout<<"Enter Account Number to Unlock: ";
+    std::cin>>acc_no;
+    int index = find_customer(all_customers, acc_no);
+
+    if(index!=-1){
+        customer& current_customer = all_customers[index];
+        current_customer.edit_account_status(1);
+        current_customer.edit_password_attempts_remaining(4);
+        std::cout<<"Congrats! Account is Now ACTIVE.\n";
+    }else{
+        std::cout<<"Account Not Found.\n";
+    }
 }
 
 void admin::give_loan(std::vector<customer>& all_customers){
@@ -172,11 +202,12 @@ void admin::give_loan(std::vector<customer>& all_customers){
     int index = find_customer(all_customers, acc_no);
 
     if(index!=-1){
-        const customer& current_customer = all_customers[index];
+        customer& current_customer = all_customers[index];
         std::cout<<"Enter The Amount of Loan to Approve: ";
         float loan;
         std::cin>>loan;
-        /*current_customer.loan todo*/;
+        current_customer.edit_loan_amount(loan);
+        std::cout<<"Transaction Successful. \n";
     }
 }
 
@@ -195,7 +226,7 @@ void admin::view_customer_info(const std::vector<customer>& all_customers){
         std::cout << "Balance:        Rs." << current_customer.get_balance() << std::endl;
         std::cout << "Loan Amount:    Rs." << current_customer.get_loan_amount() << std::endl;
         std::cout << "Account Status: ";
-        if(current_customer.account_status == 0) std::cout<<"Active. \n";
+        if(current_customer.get_account_status() == 0) std::cout<<"Active. \n";
         else std::cout<<"Locked. \n";
         std::cout << "------------------------" << std::endl;
     } else {

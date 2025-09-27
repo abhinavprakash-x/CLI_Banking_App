@@ -6,7 +6,7 @@ customer::customer(){
     customer_password = "";
     balance = 0.0;
     loan_amount = 0.0;
-    wrong_password_attempts = 0;
+    password_attempts_remaining = 0;
     account_status = 0;
 }
 
@@ -16,7 +16,7 @@ customer::customer(long acc_no, std::string name, std::string passwd, double bal
     customer_password = passwd;
     balance = bal;
     loan_amount = loan_bal;
-    wrong_password_attempts = attempts;
+    password_attempts_remaining = attempts;
     account_status = status;
 }
 
@@ -24,32 +24,40 @@ void customer::withdraw(){
     float amount;
     std::cout<< "Enter The Amount of Money to Withdraw: ";
     std::cin>> amount;
-    this->withdraw(amount);
+    this->withdraw(amount, false);
 }
 
-void customer::withdraw(double amount){
-    if(amount<0) {std::cout<<"Negative Money !!"; return;}
+bool customer::withdraw(double amount, bool silent){
+
+    if(amount<0) {std::cout<<"Negative Money !!"; return false;}
+
     if(balance > amount){
         balance -= amount;
-        std::cout<< "Transaction Successful.\n";
+        if(!silent) std::cout << "Transaction Successful.\n";
+
         if(balance < MINIMUM_BALANCE){
-            std::cout<<"Balance Below Minimum Amount Rs.100 deucted. \n";
             balance -= MINIMUM_BALANCE_CHARGE;
+            if(!silent) std::cout << "Balance is below minimum. A charge of " << MINIMUM_BALANCE_CHARGE << " has been deducted.\n";
         }
-    } else std::cout<<"Insufficient Funds\n";
+        return true;
+
+    } else {
+        if(!silent) std::cout << "Transaction Failed: Insufficient Funds.\n";
+        return false;
+    }
 }
 
 void customer::deposit(){
     float amount;
     std::cout<< "Enter The Amount of Money to Deposit: ";
     std::cin>> amount;
-    this->deposit(amount);
+    this->deposit(amount,false);
 }
 
-void customer::deposit(double amount){
-    if(amount<0) {std::cout<<"Negative Money !!"; return;}
+bool customer::deposit(double amount, bool silent){
+    if(amount<0) {std::cout<<"Negative Money !!"; return false;}
     balance += amount;
-    std::cout<< "Transaction Successful.\n";
+    if(!silent) std::cout << "Transaction Successful.\n";
 }
 
 void customer::transfer(std::vector<customer>& all_customers){
@@ -60,8 +68,8 @@ void customer::transfer(std::vector<customer>& all_customers){
     std::cin>> receiver_account_no;
     std::cout<< "Enter The Amount of Money to Transfer: ";
     std::cin>> amount;
-    customer *receiver = nullptr;
 
+    customer *receiver = nullptr;
     for(customer &user: all_customers){
         if(user.get_account_number() == receiver_account_no){
             receiver = &user;
@@ -69,9 +77,14 @@ void customer::transfer(std::vector<customer>& all_customers){
         }
     }
 
-    if(receiver!=nullptr){
-        this->withdraw(amount);
-        receiver->deposit(amount);
+    if(receiver != nullptr){
+        // Only deposit if the withdrawal from this account succeeds
+        if(this->withdraw(amount,false)){
+            receiver->deposit(amount, false);
+            std::cout << "Transfer to account " << receiver_account_no << " was successful.\n";
+        }
+    } else {
+        std::cout << "Error: Receiver account not found.\n";
     }
 }
 
@@ -111,5 +124,9 @@ std::string customer::get_customer_name() const { return customer_name; }
 std::string customer::get_password() const { return customer_password; }
 double customer::get_balance() const { return balance; }
 double customer::get_loan_amount() const { return loan_amount; }
-int customer::get_wrong_password_attempts() const { return wrong_password_attempts; }
+int customer::get_password_attempts_remaining() const { return password_attempts_remaining; }
 int customer::get_account_status() const { return account_status; }
+
+void customer::edit_account_status(int status) { account_status = status; }
+void customer::edit_password_attempts_remaining(int attempts) { password_attempts_remaining = attempts; }
+void customer::edit_loan_amount(int loan) { loan_amount = loan; }

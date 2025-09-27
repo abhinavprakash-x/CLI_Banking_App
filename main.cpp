@@ -9,10 +9,11 @@
 
 
 //Functions needed in this program
+void about_menu();
 int main_menu();
 int admin_menu(bool login);
 void customer_login(std::vector <customer> &all_customers);
-void customer_menu(customer &logged_in_customer);
+void customer_menu(customer &logged_in_customer, std::vector <customer> &all_customers);
 void save_all_customers(const std::vector<customer>& customers, const std::string& filename);
 std::vector<customer> load_all_customers(const std::string& filename);
 
@@ -47,7 +48,7 @@ int main(){
                 case 4: Admin_user.deposit(all_customers); std::cin.ignore(1000, '\n'); std::cin.get(); break;
                 case 5: Admin_user.transfer(all_customers); std::cin.ignore(1000, '\n'); std::cin.get(); break;
                 case 6: Admin_user.give_interest(all_customers); std::cin.ignore(1000, '\n'); std::cin.get(); break;
-                case 7: Admin_user.deduct_bills(all_customers); std::cin.ignore(1000, '\n'); std::cin.get(); break;
+                case 7: Admin_user.loan_interest(all_customers); std::cin.ignore(1000, '\n'); std::cin.get(); break;
                 case 8: Admin_user.view_customer_info(all_customers); std::cin.ignore(1000, '\n'); std::cin.get(); break;
                 case 9: Admin_user.give_loan(all_customers); std::cin.ignore(1000, '\n'); std::cin.get(); break;
                 case 10: Admin_user.unlock_account(all_customers); std::cin.ignore(1000, '\n'); std::cin.get(); break;
@@ -69,6 +70,10 @@ int main(){
             save_all_customers(all_customers, FILENAME);
             std::cout<< "Data Saved";
             return 0;
+
+        }else if(user_choice_main == 4){
+
+            about_menu();
 
         }
         else std::cout<<"Wrong Option Selected\n";
@@ -134,7 +139,7 @@ void save_all_customers(const std::vector<customer>& customers, const std::strin
             << cust.get_password() << ","
             << cust.get_balance() << ","
             << cust.get_loan_amount() << ","
-            << cust.get_wrong_password_attempts() << ","
+            << cust.get_password_attempts_remaining() << ","
             << cust.get_account_status() << std::endl; // endl creates a new line
     }
 
@@ -149,7 +154,7 @@ int main_menu(){
     std::cout<<"*******************************************************\n";
     std::cout<<"\t\t CLI Banking App \n";
     std::cout<<"*******************************************************\n";
-    std::cout<<"\t (1) Admin Login \n\t (2) Customer Login \n\t (3) Exit Application and Save Data\n";
+    std::cout<<"\t (1) Admin Login \n\t (2) Customer Login \n\t (3) Exit Application and Save Data \n\t (4) Application Info \n";
     std::cout<<"Please Choose Your Desired Operation: ";
     std::cin>> user_choice;
     return user_choice;
@@ -163,7 +168,7 @@ int admin_menu(bool login){
         std::cout<<"*******************************************************\n";
         std::cout<<"\t\t CLI Banking App \n";
         std::cout<<"*******************************************************\n";
-        std::cout<<"Welcome Back! Admin User. \n";
+        std::cout<<"Welcome Back! Mr. Abhinav Prakash. \n";
         std::cout<<"*******************************************************\n";
         std::cout<<"\t (1) Create New Bank Account \n";
         std::cout<<"\t (2) Delete an Existing Bank Account \n";
@@ -171,7 +176,7 @@ int admin_menu(bool login){
         std::cout<<"\t (4) Deposit to a Account \n";
         std::cout<<"\t (5) Transfer Funds From one Account to Another \n";
         std::cout<<"\t (6) Give Interest to all Bank Accounts \n";
-        std::cout<<"\t (7) Deduct Bills from all Bank Accounts \n";
+        std::cout<<"\t (7) Add Bills to all Bank Accounts \n";
         std::cout<<"\t (8) View Bank Account Details \n";
         std::cout<<"\t (9) Add Loan to a Bank Account \n";
         std::cout<<"\t (10) Unlock a Bank Account \n";
@@ -243,18 +248,36 @@ void customer_login(std::vector<customer>& all_customers) {
             found_customer = true; // Found the account
 
             //check if account is locked TODO
-            if (user.get_password() == passwd && user.account_status == 0) {
-                std::cout << "Login Successful!" << std::endl;
-                user.wrong_password_attempts = 0;
-                // Now that we've found the correct user, show them their menu
-                customer_menu(user, all_customers);
+            if (user.get_password() == passwd) {
+
+                if(user.get_account_status() == 1){
+                    std::cout << "Login Successful!" << std::endl;
+                    user.edit_password_attempts_remaining(4);
+                    // Now that we've found the correct user, show them their menu
+                    customer_menu(user, all_customers);
+                }else{
+                    std::cout<<"Your Account has been Locked, Talk to an Admin to unlock it.\n";
+                    std::cout << "Press Any Key to continue...";
+                    std::cin.ignore(1000, '\n');
+                    std::cin.get();
+                }
+
             } else {
-                std::cout<< "Invalid Password or Account Locked.\n";
-                user.wrong_password_attempts++;
-                if(user.wrong_password_attempts >= 3) user.account_status = 1;
-                std::cout << "Press Any Key to continue...";
-                std::cin.ignore(1000, '\n');
-                std::cin.get();
+
+                if(user.get_password_attempts_remaining() <= 0){
+                    std::cout<<"Your Account has been Locked, Talk to an Admin to unlock it.\n";
+                    std::cout << "Press Any Key to continue...";
+                    std::cin.ignore(1000, '\n');
+                    std::cin.get();
+                }else{
+                    user.edit_password_attempts_remaining(user.get_password_attempts_remaining() - 1);
+                    std::cout<< "Invalid Password. You have "<< user.get_password_attempts_remaining()<< " Attempts Remaining.\n";
+                    if(user.get_password_attempts_remaining() <= 0) user.edit_account_status(0);
+                    std::cout << "Press Any Key to continue...";
+                    std::cin.ignore(1000, '\n');
+                    std::cin.get();
+                }
+
             }
             return;
         }
@@ -266,4 +289,11 @@ void customer_login(std::vector<customer>& all_customers) {
         std::cin.ignore(1000, '\n');
         std::cin.get();
     }
+}
+
+void about_menu(){
+    std::cout<<"Application Name: CLI Banking App\n";
+    std::cout<<"Version: 1.0\n";
+    std::cout<<"Developed By: Abhinav Prakash\n";
+    std::cout<<"To Clone This Project: github.com/abhinavprakash-x/link \n";//add magic numbers here
 }

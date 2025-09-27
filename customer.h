@@ -18,12 +18,10 @@ class customer{
         std::string customer_password;
         double balance;
         double loan_amount;
+        int password_attempts_remaining;
+        int account_status;
         
         public:
-
-        //These infomation are stored in public so they can be accessed and modified directly while program is executing
-        int wrong_password_attempts;
-        int account_status;
 
         //constructors
         customer();
@@ -31,13 +29,17 @@ class customer{
         
         //methods
         void withdraw();
-        void withdraw(double amount);
+        bool withdraw(double amount, bool silent = false);
         void deposit();
-        void deposit(double amount);
+        bool deposit(double amount, bool silent = false);
         void transfer(std::vector<customer>& all_customers);
         void change_password();
         void view_balance();
         void pay_loan();
+
+        void edit_loan_amount(int loan);
+        void edit_password_attempts_remaining(int attempts);
+        void edit_account_status(int status);
 
         //functions used to load data from csv to program
         long get_account_number() const;
@@ -45,7 +47,7 @@ class customer{
         std::string get_password() const;
         double get_balance() const;
         double get_loan_amount() const;
-        int get_wrong_password_attempts() const;
+        int get_password_attempts_remaining() const;
         int get_account_status() const;
 };
 
