@@ -261,13 +261,13 @@ void customer_login(std::vector<customer>& all_customers, const AppConfig& confi
                 return;
             }
         }
-        if (!found_customer) {
+    }
+    if (!found_customer) {
             std::cout << "Account not found." << std::endl;
             std::cout << "Press Any Key to continue...";
             std::cin.ignore(1000, '\n');
             std::cin.get();
         }
-    }
 }
 
 void about_menu(const AppConfig& config){
