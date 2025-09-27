@@ -99,7 +99,7 @@ void customer::change_password(){
 
 void customer::view_balance(){
     std::cout<<"Your Current Balance is: "<< balance<< std::endl;
-    std::cout<<"You Have Loan Due of: "<< loan_amount<< std::endl;
+    std::cout<<"You Have Loan Due of: "<< loan_amount;
 }
 
 void customer::pay_loan(const AppConfig& config){

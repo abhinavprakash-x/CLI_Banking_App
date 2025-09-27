@@ -29,7 +29,7 @@ int main(){
     
     //CLI
     int user_choice_main=0;
-    while(user_choice_main!=3){
+    while(user_choice_main!=4){
         user_choice_main = main_menu();
 
         if(user_choice_main == 1){
@@ -61,6 +61,10 @@ int main(){
                         std::cin.get();
                     }
                 }
+            }else{
+                std::cout<<"Invalid Password.\n";
+                std::cin.ignore(1000,'\n');
+                std::cin.get();
             }
         }else if(user_choice_main == 2){
 
@@ -73,7 +77,6 @@ int main(){
         }else if(user_choice_main == 4){
 
             save_all_customers(all_customers, FILENAME);
-            std::cout<< "Data Saved";
             return 0;
         }
         else std::cout<<"Wrong Option Selected\n";
@@ -214,6 +217,7 @@ void customer_menu(customer& logged_in_customer, std::vector<customer>& all_cust
         }
         if(user_choice!=7){
             std::cout << "\nPress Enter to continue...";
+            std::cin.ignore(1000,'\n');
             std::cin.get();
         }
     }
@@ -285,7 +289,6 @@ void about_menu(const AppConfig& config){
     std::cout<<"Developed By: Abhinav Prakash\n";
     std::cout<<"To Clone This Project: github.com/abhinavprakash-x/link \n";
     std::cin.ignore(1000,'\n');
-    std::cin.get();
 }
 
 int option_input(){

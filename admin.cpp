@@ -30,8 +30,6 @@ void admin::create_account(std::vector<customer>& all_customers){
     double initial_deposit;
 
     std::cout << "\n--- Create New Customer Account ---" << std::endl;
-    std::cin.ignore(1000, '\n'); 
-    
     std::cout << "Enter customer's full name: ";
     std::getline(std::cin, name);
     std::cout << "Enter a temporary password for the account: ";
@@ -144,9 +142,8 @@ void admin::transfer(std::vector<customer>& all_customers, const AppConfig& conf
         customer &sender = all_customers[sender_index];
         customer &receiver = all_customers[receiver_index];
         
-        if(sender.withdraw(amount, config, true)){
+        if(sender.withdraw(amount, config, false)){
             receiver.deposit(amount, true);
-            std::cout << "Transaction Successful.\n";
         }
     }else{
         std::cout << "Transaction Failed: Invalid Sender or Receiver Account Number.\n";
@@ -161,8 +158,7 @@ void admin::give_interest(std::vector<customer>& all_customers, double interest_
         // Deposit the interest amount silently
         user.deposit(interest_amount, true);
     }
-    std::cout << "Interest of " << interest_rate * 100 << "% has been successfully applied to all accounts." << std::endl;
-
+    std::cout << "Interest of " << interest_rate * 100 << "% has been successfully applied to all accounts.";
 }
 
 void admin::loan_interest(std::vector<customer>& all_customers, const AppConfig& config) {
@@ -171,7 +167,7 @@ void admin::loan_interest(std::vector<customer>& all_customers, const AppConfig&
         double interest_amount = user.get_loan_amount() * config.loan_charge;
         user.edit_loan_amount(user.get_loan_amount() + interest_amount);
     }
-    std::cout << "Maintenance Charges Deducted from all Accounts.\nLoan Interest Added to Accounts having loan.\n";
+    std::cout << "Maintenance Charges Deducted from all Accounts.\nLoan Interest Added to Accounts having loan.";
 }
 
 void admin::unlock_account(std::vector<customer>& all_customers){
