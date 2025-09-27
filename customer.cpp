@@ -21,7 +21,7 @@ customer::customer(long acc_no, std::string name, std::string passwd, double bal
 }
 
 void customer::withdraw(const AppConfig& config){
-    float amount;
+    double amount;
     std::cout<< "Enter The Amount of Money to Withdraw: ";
     std::cin>> amount;
     this->withdraw(amount, config, false);
@@ -48,7 +48,7 @@ bool customer::withdraw(double amount, const AppConfig& config, bool silent){
 }
 
 void customer::deposit(){
-    float amount;
+    double amount;
     std::cout<< "Enter The Amount of Money to Deposit: ";
     std::cin>> amount;
     this->deposit(amount,false);
@@ -64,7 +64,7 @@ bool customer::deposit(double amount, bool silent){
 void customer::transfer(std::vector<customer>& all_customers, const AppConfig& config){
 
     long receiver_account_no;
-    float amount;
+    double amount;
     std::cout<<"Enter the Account Number to Transfer Funds: ";
     std::cin>> receiver_account_no;
     std::cout<< "Enter The Amount of Money to Transfer: ";
@@ -104,7 +104,7 @@ void customer::view_balance(){
 
 void customer::pay_loan(const AppConfig& config){
     std::cout<<"The Amount Will be Deducted from your Account.\n";
-    float amount;
+    double amount;
     std::cout<< "Enter The Amount of Money to Pay Loan: ";
     std::cin>> amount;
     if(amount<0) {std::cout<<"Negative Money !!"; return;}
@@ -126,4 +126,4 @@ int customer::get_account_status() const { return account_status; }
 
 void customer::edit_account_status(int status) { account_status = status; }
 void customer::edit_password_attempts_remaining(int attempts) { password_attempts_remaining = attempts; }
-void customer::edit_loan_amount(float loan) { loan_amount = loan; }
+void customer::edit_loan_amount(double loan) { loan_amount = loan; }

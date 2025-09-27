@@ -195,7 +195,7 @@ void admin::give_loan(std::vector<customer>& all_customers){
     if(index!=-1){
         customer& current_customer = all_customers[index];
         std::cout<<"Enter The Amount of Loan to Approve: ";
-        float loan;
+        double loan;
         std::cin>>loan;
         current_customer.edit_loan_amount(current_customer.get_loan_amount() + loan);
         std::cout<<"Transaction Successful. \n";

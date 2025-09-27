@@ -1,4 +1,3 @@
 Password Encryption (hashing or something)
-Admin Password Not Hardcoded
 Add Passbook (Transaction) functionality (later)
 UI (later)

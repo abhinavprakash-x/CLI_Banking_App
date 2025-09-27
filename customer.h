@@ -43,7 +43,7 @@ class customer{
         void view_balance();
         void pay_loan(const AppConfig& config);
 
-        void edit_loan_amount(float loan);
+        void edit_loan_amount(double loan);
         void edit_password_attempts_remaining(int attempts);
         void edit_account_status(int status);
 
