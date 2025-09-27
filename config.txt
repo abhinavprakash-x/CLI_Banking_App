@@ -1,0 +1,6 @@
+admin_password = Admin@123
+interest_rate = 0.055
+loan_charge = 0.095
+maintenance_charge = 0
+minimum_balance = 500.0
+minimum_balance_charge = 100.0

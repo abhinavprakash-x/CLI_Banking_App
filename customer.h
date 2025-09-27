@@ -1,11 +1,17 @@
 #ifndef CUSTOMER_H
 #define CUSTOMER_H
 
-static constexpr double MINIMUM_BALANCE = 500.0;
-static constexpr double MINIMUM_BALANCE_CHARGE = 100.0;
-
 #include<iostream>
 #include<vector>
+
+struct AppConfig {
+    std::string admin_password;
+    double interest_rate;
+    double loan_charge;
+    double maintenance_charge;
+    double minimum_balance;
+    double minimum_balance_charge;
+};
 
 //Template for customer information and abilities.
 class customer{
@@ -28,16 +34,16 @@ class customer{
         customer(long acc_no, std::string name, std::string passwd, double bal, double loan_bal, int attempts, int status);
         
         //methods
-        void withdraw();
-        bool withdraw(double amount, bool silent = false);
+        void withdraw(const AppConfig& config);
+        bool withdraw(double amount, bool silent = false, const AppConfig& config);
         void deposit();
         bool deposit(double amount, bool silent = false);
-        void transfer(std::vector<customer>& all_customers);
+        void transfer(std::vector<customer>& all_customers, const AppConfig& config);
         void change_password();
         void view_balance();
-        void pay_loan();
+        void pay_loan(const AppConfig& config);
 
-        void edit_loan_amount(int loan);
+        void edit_loan_amount(float loan);
         void edit_password_attempts_remaining(int attempts);
         void edit_account_status(int status);
 

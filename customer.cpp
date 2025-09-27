@@ -20,24 +20,24 @@ customer::customer(long acc_no, std::string name, std::string passwd, double bal
     account_status = status;
 }
 
-void customer::withdraw(){
+void customer::withdraw(const AppConfig& config){
     float amount;
     std::cout<< "Enter The Amount of Money to Withdraw: ";
     std::cin>> amount;
-    this->withdraw(amount, false);
+    this->withdraw(amount, false, config);
 }
 
-bool customer::withdraw(double amount, bool silent){
+bool customer::withdraw(double amount, bool silent, const AppConfig& config){
 
     if(amount<0) {std::cout<<"Negative Money !!"; return false;}
 
-    if(balance > amount){
+    if(balance >= amount){
         balance -= amount;
         if(!silent) std::cout << "Transaction Successful.\n";
 
-        if(balance < MINIMUM_BALANCE){
-            balance -= MINIMUM_BALANCE_CHARGE;
-            if(!silent) std::cout << "Balance is below minimum. A charge of " << MINIMUM_BALANCE_CHARGE << " has been deducted.\n";
+        if(balance < config.minimum_balance){
+            balance -= config.minimum_balance_charge;
+            if(!silent) std::cout << "Balance is below minimum. A charge of " << config.minimum_balance_charge << " has been deducted.\n";
         }
         return true;
 
@@ -58,9 +58,10 @@ bool customer::deposit(double amount, bool silent){
     if(amount<0) {std::cout<<"Negative Money !!"; return false;}
     balance += amount;
     if(!silent) std::cout << "Transaction Successful.\n";
+    return true;
 }
 
-void customer::transfer(std::vector<customer>& all_customers){
+void customer::transfer(std::vector<customer>& all_customers, const AppConfig& config){
 
     long receiver_account_no;
     float amount;
@@ -79,7 +80,7 @@ void customer::transfer(std::vector<customer>& all_customers){
 
     if(receiver != nullptr){
         // Only deposit if the withdrawal from this account succeeds
-        if(this->withdraw(amount,false)){
+        if(this->withdraw(amount,false, config)){
             receiver->deposit(amount, false);
             std::cout << "Transfer to account " << receiver_account_no << " was successful.\n";
         }
@@ -101,22 +102,18 @@ void customer::view_balance(){
     std::cout<<"You Have Loan Due of: "<< loan_amount<< std::endl;
 }
 
-void customer::pay_loan(){
+void customer::pay_loan(const AppConfig& config){
     std::cout<<"The Amount Will be Deducted from your Account.\n";
     float amount;
     std::cout<< "Enter The Amount of Money to Pay Loan: ";
     std::cin>> amount;
     if(amount<0) {std::cout<<"Negative Money !!"; return;}
     if(amount>loan_amount) {std::cout<<"You Don't have that much Due"; return;}
-    if(balance > amount){
-        balance -= amount;
-        loan_amount -= amount;
-        if(balance < 500){
-            std::cout<<"Balance Below Minimum Amount Rs.100 deucted. \n";
-            balance -= 100;
-        }
-    } else std::cout<<"Insufficient Funds\n";
-    std::cout<< "Transaction Successfull.\n";
+    if (this->withdraw(amount, true, config)) {
+        this->edit_loan_amount(this->get_loan_amount() - amount);
+        std::cout << "Loan payment of Rs." << amount << " was successful.\n";
+        std::cout << "Remaining Loan Due: Rs." << this->get_loan_amount() << std::endl;
+    }
 }
 
 long customer::get_account_number() const { return account_number; }
@@ -129,4 +126,4 @@ int customer::get_account_status() const { return account_status; }
 
 void customer::edit_account_status(int status) { account_status = status; }
 void customer::edit_password_attempts_remaining(int attempts) { password_attempts_remaining = attempts; }
-void customer::edit_loan_amount(int loan) { loan_amount = loan; }
+void customer::edit_loan_amount(float loan) { loan_amount = loan; }
