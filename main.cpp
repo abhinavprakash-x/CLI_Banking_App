@@ -154,7 +154,7 @@ int main_menu(){
     std::cout<<"*******************************************************\n";
     std::cout<<"\t\t CLI Banking App \n";
     std::cout<<"*******************************************************\n";
-    std::cout<<"\t (1) Admin Login \n\t (2) Customer Login \n\t (3) Exit Application and Save Data \n\t (4) Application Info \n";
+    std::cout<<"\t (1) Admin Login \n\t (2) Customer Login \n\t (3) Exit Application and Save Data \n\t (4) Important Information \n";
     std::cout<<"Please Choose Your Desired Operation: ";
     std::cin>> user_choice;
     return user_choice;
@@ -292,8 +292,14 @@ void customer_login(std::vector<customer>& all_customers) {
 }
 
 void about_menu(){
+
+    std::cout<<"Minimum Balance: "<< MINIMUM_BALANCE<< std::endl;
+    std::cout<<"If Balance goes below "<< MINIMUM_BALANCE<<" then a charge of Rs. "<< MINIMUM_BALANCE_CHARGE<<" will be deducted from your Acccount.\n";
+    std::cout<<"Interest Rate S/B Accounts: "<< INTEREST_RATE * 100<< "%\n";
+    std::cout<<"Loan Charges: "<< LOAN_CHARGE * 100 <<"%\n";
+
     std::cout<<"Application Name: CLI Banking App\n";
     std::cout<<"Version: 1.0\n";
     std::cout<<"Developed By: Abhinav Prakash\n";
-    std::cout<<"To Clone This Project: github.com/abhinavprakash-x/link \n";//add magic numbers here
+    std::cout<<"To Clone This Project: github.com/abhinavprakash-x/link \n";
 }

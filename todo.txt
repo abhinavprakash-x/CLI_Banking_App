@@ -6,5 +6,3 @@ Make utils.h containing all functions -> Make main.cpp cleaner
 function to update customer information
 pin must contain letter alphabets etc.
 magic numbers and admin password from config file
-
-add a main menu item showing details of application and creator info, version info, etc
