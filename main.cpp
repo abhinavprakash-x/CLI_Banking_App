@@ -8,6 +8,7 @@
 #include"admin.h"
 
 //Functions needed in this program
+void clear_screen();
 void about_menu(const AppConfig& config);
 int main_menu();
 int admin_menu();
@@ -153,7 +154,7 @@ void save_all_customers(const std::vector<customer>& customers, const std::strin
 
 //The Home Screen CLI
 int main_menu(){
-    system("cls");
+    clear_screen();
     std::cout<<"*******************************************************\n";
     std::cout<<"\t\t CLI Banking App \n";
     std::cout<<"*******************************************************\n";
@@ -164,7 +165,7 @@ int main_menu(){
 
 //The Admin Menu after successful login
 int admin_menu(){
-    system("cls");
+    clear_screen();
     std::cout<<"*******************************************************\n";
     std::cout<<"\t\t CLI Banking App \n";
     std::cout<<"*******************************************************\n";
@@ -189,7 +190,7 @@ int admin_menu(){
 void customer_menu(customer& logged_in_customer, std::vector<customer>& all_customers, const AppConfig& config) {
     int user_choice = 0;
     while(user_choice!=7){
-        system("cls");
+        clear_screen();
         std::cout<<"*******************************************************\n";
         std::cout<<"\t\t CLI Banking App \n";
         std::cout<<"*******************************************************\n";
@@ -248,7 +249,7 @@ void customer_login(std::vector<customer>& all_customers, const AppConfig& confi
 
             if (user.get_account_status() == 0) { // 0 is LOCKED
                 std::cout << "Your Account has been Locked. Please contact an Admin to unlock it.\n";
-            } else if (user.get_password() == passwd) { // Account is Active, check password
+            } else if (user.get_password() == encrypt(passwd)) { // Account is Active, check password
                 std::cout << "Login Successful!" << std::endl;
                 user.edit_password_attempts_remaining(4); // Reset attempts on successful login
                 customer_menu(user, all_customers, config);
@@ -276,7 +277,7 @@ void customer_login(std::vector<customer>& all_customers, const AppConfig& confi
 
 void about_menu(const AppConfig& config){
 
-    system("cls");
+    clear_screen();
     std::cout<<"Minimum Balance: "<< config.minimum_balance<< std::endl;
     std::cout<<"Minimum Balance Penalty: "<< config.minimum_balance_charge<< std::endl;
     std::cout<<"Interest Rate S/B Accounts: "<< config.interest_rate * 100<< "%\n";
@@ -314,6 +315,7 @@ AppConfig load_config(const std::string& filename){
 
         std::cout << "Enter a new admin password: ";
         std::cin >> config.admin_password;
+        config.admin_password = encrypt(config.admin_password);
         std::cout << "Enter interest rate (e.g., 0.055 for 5.5%): ";
         std::cin >> config.interest_rate;
         std::cout << "Enter loan charge rate (e.g., 0.095 for 9.5%): ";
@@ -367,4 +369,14 @@ AppConfig load_config(const std::string& filename){
     }
 
     return config;
+}
+
+void clear_screen(){
+    #ifdef _WIN32
+        // For Windows
+        std::system("cls");
+    #else
+        // For macOS and Linux
+        std::system("clear");
+    #endif
 }

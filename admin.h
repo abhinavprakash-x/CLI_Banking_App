@@ -11,6 +11,7 @@ class admin{
 
         bool login(const std::string& correct_password);
         void create_account(std::vector<customer>& all_customers);
+        long generate_new_account_number(const std::vector<customer>& all_customers);
         void delete_account(std::vector<customer>& all_customers);
         void withdraw(std::vector<customer>& all_customers, const AppConfig& config);
         void deposit(std::vector<customer>& all_customers);

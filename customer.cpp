@@ -90,9 +90,11 @@ void customer::transfer(std::vector<customer>& all_customers, const AppConfig& c
 }
 
 void customer::change_password(){
+    std::string new_password;
     std::cout<<"Choose a New Password: \n";
     std::cout<<"NOTE: CHOOSE A STRONG PASSWORD!!!\n";
-    std::cin>>customer_password;
+    std::cin>>new_password;
+    customer_password = encrypt(new_password);
     std::cout<< "Password Updated Successfully.\n";
 
 }
@@ -127,3 +129,26 @@ int customer::get_account_status() const { return account_status; }
 void customer::edit_account_status(int status) { account_status = status; }
 void customer::edit_password_attempts_remaining(int attempts) { password_attempts_remaining = attempts; }
 void customer::edit_loan_amount(double loan) { loan_amount = loan; }
+
+//NB: This Hashing function is so badly written that Even after knowing the code it is almost impossible to decrypt it back :)
+//Idk if I should laugh or cry
+std::string encrypt(std::string &passwd){
+    std::string step1 = passwd;
+    std::vector<int> step2(passwd.size());
+    std::string step3;
+
+    for (size_t i = 0; i < passwd.length(); ++i) {
+        step1[i] += 4;                     // shift
+        step2[i] = int(step1[i]);          // convert to int
+        step2[i] /= 2;                     // divide by 2
+        step2[i] = int(pow(step2[i], 1.069420)); // nonlinear pow
+        step3.push_back(char(step2[i] % 256));   // prevent overflow
+    }
+    const char* hexDigits = "0123456789abcdef";
+    std::string hex;
+    for (unsigned char c : step3) {
+        hex.push_back(hexDigits[(c >> 4) & 0xF]);
+        hex.push_back(hexDigits[c & 0xF]);
+    }
+    return hex;
+}

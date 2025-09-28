@@ -1,4 +1,4 @@
-admin_password = Admin@123
+admin_password = 2b444a474b2b202121
 interest_rate = 0.055
 loan_charge = 0.095
 maintenance_charge = 0

@@ -1,6 +1,6 @@
 To Build the Application: 
 
-cd Desktop\Codes\"CLI Banking App"\
+cd Desktop\Codes\CLI_Banking_App\
 g++ main.cpp admin.cpp customer.cpp -o bank_app.exe
 .\bank_app.exe
 

@@ -3,6 +3,7 @@
 
 #include<iostream>
 #include<vector>
+#include<cmath>
 
 struct AppConfig {
     std::string admin_password;
@@ -12,6 +13,8 @@ struct AppConfig {
     double minimum_balance;
     double minimum_balance_charge;
 };
+
+std::string encrypt(std::string &passwd);
 
 //Template for customer information and abilities.
 class customer{
