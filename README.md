@@ -6,25 +6,6 @@
 
 A comprehensive, command-line based banking application written in C++. Simulates banking operations for both administrators and customers, featuring CSV-based data persistence and external configuration. Great for learning **OOP** and **C++ fundamentals**.
 
----
-
-## 📑 Table of Contents
-
-- [✨ Key Features](#-key-features)  
-  - [🤵 Admin Functionalities](#-admin-functionalities)  
-  - [👤 Customer Functionalities](#-customer-functionalities)  
-  - [🔧 General Features](#-general-features)  
-- [🏛️ Project Architecture & Strengths](#️-project-architecture--strengths)  
-- [⚠️ Security Note](#️-note-on-security--hashing)  
-- [🚀 Getting Started](#-getting-started)  
-  - [Main Banking Application](#main-banking-application)  
-  - [Admin Password Change Utility](#admin-password-change-utility)  
-- [⚙️ Configuration](#-configuration)  
-- [📚 Learning Outcomes](#-learning-outcomes)  
-- [📜 Changelog](#-project-history-changelog)  
-- [🎯 Future Work](#-future-work-todo)  
-
----
 
 ## ✨ Key Features
 
