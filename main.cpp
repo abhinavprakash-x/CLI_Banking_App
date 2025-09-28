@@ -286,9 +286,9 @@ void about_menu(const AppConfig& config){
 
     std::cout<<"------------------------------------------------------------\n";
     std::cout<<"Application Name: CLI Banking App\n";
-    std::cout<<"Version: 1.2\n";
+    std::cout<<"Version: 1.3\n";
     std::cout<<"Developed By: Abhinav Prakash\n";
-    std::cout<<"To Clone This Project: github.com/abhinavprakash-x/link \n";
+    std::cout<<"To Clone This Project: https://github.com/abhinavprakash-x/CLI_Banking_App.git \n";
     std::cin.ignore(1000,'\n');
 }
 

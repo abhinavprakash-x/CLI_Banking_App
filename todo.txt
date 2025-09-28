@@ -1,2 +1,3 @@
+If Customer forgets Password Reset it. by Admin only.
 Add Passbook (Transaction) functionality (later)
 UI (later)
