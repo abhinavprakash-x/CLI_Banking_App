@@ -111,7 +111,7 @@ std::vector<customer> load_all_customers(const std::string& filename) {
         int attempts, status;
 
         // Parse the CSV line
-        getline(ss, token, ','); acc_no = std::stol(token);
+        getline(ss, token, ','); acc_no = std::stol(token); // stol = string to long
         getline(ss, token, ','); name = token;
         getline(ss, token, ','); passwd = token;
         getline(ss, token, ','); bal = std::stod(token); // stod = string to double
@@ -169,7 +169,7 @@ int admin_menu(){
     std::cout<<"*******************************************************\n";
     std::cout<<"\t\t CLI Banking App \n";
     std::cout<<"*******************************************************\n";
-    std::cout<<"Welcome Back! Mr. Abhinav Prakash. \n";
+    std::cout<<"Welcome Back! Mr. Admin. \n";
     std::cout<<"*******************************************************\n";
     std::cout<<"\t (1) Create New Bank Account \n";
     std::cout<<"\t (2) Delete an Existing Bank Account \n";

@@ -1,3 +1,2 @@
-Password Encryption (hashing or something)
 Add Passbook (Transaction) functionality (later)
 UI (later)
