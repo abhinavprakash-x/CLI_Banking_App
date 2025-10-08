@@ -60,7 +60,7 @@ g++ main.cpp admin.cpp customer.cpp -o bank_app.exe
 .\bank_app.exe
 ```
 
-**OR:
+**OR:**
 ```
 make
 ```
