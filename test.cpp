@@ -48,6 +48,6 @@ string hash_password(const string& password) {
 }
 
 int main(){
-    cout<< hash_password("123");
+    cout<< hash_password("Admin@123");
     return 0;
 }
