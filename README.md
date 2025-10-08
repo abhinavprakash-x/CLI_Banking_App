@@ -13,7 +13,8 @@ A comprehensive, command-line based banking application written in C++. Simulate
 - **Account Management:** Create/delete customer accounts.  
 - **Transactions:** Withdraw, deposit, or transfer funds for any customer.  
 - **Financial Oversight:** Apply interest, manage loan charges, approve loans.  
-- **Account Utilities:** View detailed customer info, unlock accounts.  
+- **Account Utilities:** View detailed customer info, unlock accounts.
+- **Admin Password in `config.txt` is Admin@123.**
 
 ### 👤 Customer Functionalities
 - **Secure Login:** Accounts lock after multiple failed attempts.  
@@ -59,6 +60,11 @@ g++ main.cpp admin.cpp customer.cpp -o bank_app.exe
 .\bank_app.exe
 ```
 
+**OR:
+```
+make
+```
+
 ### Admin Password Change Utility
 1. Navigate to project directory.  
 2. Compile:
@@ -80,7 +86,7 @@ g++ change_admin_password.cpp -o change_admin_password.exe
 `config.txt` controls global parameters:
 
 ```text
-admin_password: <hashed password>
+admin_password: <hashed password> (Admin@123)
 interest_rate: 0.055
 loan_charge: 0.05
 maintenance_charge: 50
