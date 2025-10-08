@@ -5,7 +5,7 @@ CXX = g++
 CXXFLAGS = -o
 
 # Target executable
-TARGET = main.exe
+TARGET = bank_app.exe
 
 # Source files
 SRCS = main.cpp customer.cpp admin.cpp
